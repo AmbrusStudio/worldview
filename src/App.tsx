@@ -118,8 +118,10 @@ function App() {
           // far: 10000,
         }}
       >
-        {/* <color attach="background" args={[243, 243, 243]} /> */}
-        <Svg />
+        <color attach="background" args={[243, 243, 243]} />
+        <React.Suspense fallback={null}>
+          <Svg />
+        </React.Suspense>
         <MapHtml setState={setState} />
         <MapControls />
       </Canvas>
