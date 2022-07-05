@@ -1,8 +1,8 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
-  MapControls,
-  // ArcballControls,
+  // MapControls,
+  ArcballControls,
   Html,
   GizmoHelper,
   GizmoViewport,
@@ -217,8 +217,8 @@ function App() {
         {/* <EffectComposer>
           <Grid scale={scale} />
         </EffectComposer> */}
-        {/* <ArcballControls /> */}
-        <MapControls maxZoom={1.6} minZoom={0.2} />
+        <ArcballControls />
+        {/* <MapControls maxZoom={1.6} minZoom={0.2} /> */}
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           {/* <GizmoViewcube /> */}
           <GizmoViewport />
