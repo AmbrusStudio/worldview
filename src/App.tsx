@@ -1,26 +1,37 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import {
   MapControls,
-  ArcballControls,
+  // ArcballControls,
   Html,
   GizmoHelper,
   GizmoViewport,
   OrbitControls,
-  GizmoViewcube,
+  // GizmoViewcube,
   Center,
 } from '@react-three/drei';
-import { SVGLoader } from 'three-stdlib';
 import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
 import Drawer from '@mui/material/Drawer';
 import { useControls } from 'leva';
-import { Grid, EffectComposer } from '@react-three/postprocessing';
+// import { Grid, EffectComposer } from '@react-three/postprocessing';
+import WorldData from './custom.geo.min.json';
 
 window.THREE = THREE;
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+console.log('WorldData', WorldData);
+
+const drawExtrudeShape = (polygon: any[]): THREE.Shape => {
+  const shape = new THREE.Shape();
+  polygon.forEach((p, index) => {
+    if (index === 0) {
+      shape.moveTo(p[0], p[1]);
+    }
+    shape.lineTo(p[0], p[1]);
+  });
+
+  return shape;
+};
 
 // const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
@@ -34,6 +45,7 @@ const Cell = ({ color, shape, fillOpacity, index }: any) => {
         hover(true);
       }}
       onPointerOut={() => hover(false)}
+      onPointerUp={(e) => console.log(e)}
     >
       <meshBasicMaterial
         color={hovered ? 'hotpink' : color}
@@ -57,58 +69,78 @@ const Cell = ({ color, shape, fillOpacity, index }: any) => {
 function Svg() {
   const [center, setCenter] = useState(() => new Vector3(0, 0, 0));
   const ref = useRef<THREE.Group>(null!);
-  const { rotationX, rotationY, rotationZ } = useControls({
-    rotationX: {
+  const { mapRotationZ, mapScale } = useControls({
+    mapRotationZ: {
       min: -5,
       max: 5,
       value: 0,
     },
-    rotationY: {
-      min: -5,
-      max: 5,
-      value: 0,
-    },
-    rotationZ: {
-      min: -5,
-      max: 5,
-      value: 0,
+    mapScale: {
+      min: 0.01,
+      max: 1,
+      value: 0.05,
     },
   });
 
-  const { paths } = useLoader(SVGLoader, 'world-1.svg');
+  const worldShapes = useMemo(() => {
+    return WorldData.features.flatMap((feature) => {
+      const paths: {
+        shape: THREE.Shape;
+        color: string;
+        fillOpacity: number;
+      }[] = [];
 
-  console.log('paths', paths);
+      if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates.forEach((points) => {
+          points.forEach((p) => {
+            paths.push({
+              shape: drawExtrudeShape(p),
+              color: '#2196f3',
+              fillOpacity: 1,
+            });
+          });
+        });
+      }
 
-  const shapes = useMemo(
-    () =>
-      paths.flatMap((p: any) =>
-        p.toShapes(true).map((shape: any) => ({
-          shape,
-          color: p.color,
-          fillOpacity: p.userData.style.fillOpacity,
-        }))
-      ),
-    [paths]
-  );
+      if (feature.geometry.type === 'Polygon') {
+        feature.geometry.coordinates.forEach((p) => {
+          paths.push({
+            shape: drawExtrudeShape(p),
+            color: '#2196f3',
+            fillOpacity: 1,
+          });
+        });
+      }
 
-  console.log('shapes', shapes);
+      return paths;
+    });
+  }, []);
+
+  console.log('worldShapes', worldShapes);
 
   useEffect(() => {
+    console.log('ref.current', ref.current);
+
     const box = new Box3().setFromObject(ref.current);
     const sphere = new Sphere();
     box.getBoundingSphere(sphere);
 
     console.log('sphere', sphere);
 
-    setCenter((vec) => vec.set(-sphere.center.x, -sphere.center.y, 0));
-    // setCenter((vec) => vec.set(0, 0, 0));
+    // TODO：invalid
+    setCenter((vec) => vec.set(-sphere.center.x, -sphere.center.y, -1));
   }, []);
 
   return (
     <Center position={[0, 0, 0]}>
       <mesh>
-        <group position={center} ref={ref} rotation={[0, 0, -3.2]} scale={0.01}>
-          {shapes.map((props: any, index: number) => (
+        <group
+          position={center}
+          ref={ref}
+          rotation={[0, 0, mapRotationZ]}
+          scale={new Vector3(mapScale, mapScale, mapScale)}
+        >
+          {worldShapes.map((props: any, index: number) => (
             <Cell
               key={props.shape.uuid}
               index={index}
@@ -163,13 +195,6 @@ function MapHtml({ setState }: { setState: (val: boolean) => void }) {
 
 function App() {
   const [state, setState] = useState<boolean>(false);
-  const { scale } = useControls({
-    scale: {
-      min: 0.1,
-      max: 4,
-      value: 0.3,
-    },
-  });
 
   return (
     <div id="canvas-container">
@@ -192,8 +217,8 @@ function App() {
         {/* <EffectComposer>
           <Grid scale={scale} />
         </EffectComposer> */}
-        <ArcballControls />
-        {/* <MapControls enableRotate={false} maxZoom={1.6} minZoom={0.2} /> */}
+        {/* <ArcballControls /> */}
+        <MapControls maxZoom={1.6} minZoom={0.2} />
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           {/* <GizmoViewcube /> */}
           <GizmoViewport />
