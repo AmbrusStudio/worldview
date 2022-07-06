@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import React, { useRef, useMemo, useEffect, useState, FC } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   // MapControls,
@@ -17,10 +17,36 @@ import { useControls } from 'leva';
 // import { Grid, EffectComposer } from '@react-three/postprocessing';
 import WorldData from './custom.geo.min.json';
 
+type WorldFeaturesType = {
+  geometry: {
+    coordinates: any[];
+    type: 'Polygon' | 'MultiPolygon';
+  };
+  properties: {};
+  type: 'Feature';
+};
+
+type WorldDataType = {
+  features: WorldFeaturesType[];
+  type: 'FeatureCollection';
+};
+
+type CellProps = {
+  color: string;
+  shape: THREE.Shape;
+  fillOpacity: number;
+  index: number;
+};
+
 window.THREE = THREE;
 
 console.log('WorldData', WorldData);
 
+/**
+ * draw Extrude Shape
+ * @param polygon
+ * @returns
+ */
 const drawExtrudeShape = (polygon: any[]): THREE.Shape => {
   const shape = new THREE.Shape();
   polygon.forEach((p, index) => {
@@ -33,9 +59,48 @@ const drawExtrudeShape = (polygon: any[]): THREE.Shape => {
   return shape;
 };
 
+/**
+ * World Data To Shapes
+ * @param data
+ * @returns
+ */
+const WorldDataToShapes = (data: WorldFeaturesType[]) => {
+  return data.flatMap((feature) => {
+    const paths: {
+      shape: THREE.Shape;
+      color: string;
+      fillOpacity: number;
+    }[] = [];
+
+    if (feature.geometry.type === 'MultiPolygon') {
+      feature.geometry.coordinates.forEach((points) => {
+        points.forEach((p: any[]) => {
+          paths.push({
+            shape: drawExtrudeShape(p),
+            color: '#2196f3',
+            fillOpacity: 1,
+          });
+        });
+      });
+    }
+
+    if (feature.geometry.type === 'Polygon') {
+      feature.geometry.coordinates.forEach((p) => {
+        paths.push({
+          shape: drawExtrudeShape(p),
+          color: '#2196f3',
+          fillOpacity: 1,
+        });
+      });
+    }
+
+    return paths;
+  });
+};
+
 // const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
-const Cell = ({ color, shape, fillOpacity, index }: any) => {
+const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
   const [hovered, hover] = useState(false);
 
   return (
@@ -82,39 +147,10 @@ function Svg() {
     },
   });
 
-  const worldShapes = useMemo(() => {
-    return WorldData.features.flatMap((feature) => {
-      const paths: {
-        shape: THREE.Shape;
-        color: string;
-        fillOpacity: number;
-      }[] = [];
-
-      if (feature.geometry.type === 'MultiPolygon') {
-        feature.geometry.coordinates.forEach((points) => {
-          points.forEach((p) => {
-            paths.push({
-              shape: drawExtrudeShape(p),
-              color: '#2196f3',
-              fillOpacity: 1,
-            });
-          });
-        });
-      }
-
-      if (feature.geometry.type === 'Polygon') {
-        feature.geometry.coordinates.forEach((p) => {
-          paths.push({
-            shape: drawExtrudeShape(p),
-            color: '#2196f3',
-            fillOpacity: 1,
-          });
-        });
-      }
-
-      return paths;
-    });
-  }, []);
+  const worldShapes = useMemo(
+    () => WorldDataToShapes(WorldData.features as WorldFeaturesType[]),
+    []
+  );
 
   console.log('worldShapes', worldShapes);
 
