@@ -17,11 +17,10 @@ import { useControls } from 'leva';
 import WorldData from './custom.geo.min.json';
 import MapLegend from './components/MapLegend';
 import MapDrawer from './components/MapDrawer';
+import MapCamp from './components/MapCamp';
 import useStoreMapDrawer from './hooks';
 import { worldDataToShapes } from './utils';
 import { WorldFeaturesType } from './types/index.d';
-
-const points = [1, 10, 15, 20, 90];
 
 type CellProps = {
   readonly color: string;
@@ -58,22 +57,6 @@ const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
         transparent
       />
       <shapeBufferGeometry args={[shape]} />
-      {points.includes(index) && (
-        <Html
-          wrapperClass="role"
-          position={[shape.currentPoint.x, shape.currentPoint.y, 0]}
-          zIndexRange={[100, 0]}
-        >
-          <img
-            onClick={(e) => {
-              console.log('e', e);
-              setVisible(true);
-            }}
-            src="https://www.ymlx8.com/uploads/29d2d21a71f1854e1bc4cbaadd5db8ef.jpg"
-            alt="author"
-          />
-        </Html>
-      )}
     </mesh>
   );
 };
@@ -155,6 +138,7 @@ function App() {
           <React.Suspense fallback={null}>
             <Svg />
           </React.Suspense>
+          <MapCamp />
           <gridHelper />
           <axesHelper />
           {/* <EffectComposer>
