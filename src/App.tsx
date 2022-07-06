@@ -16,6 +16,13 @@ import Drawer from '@mui/material/Drawer';
 import { useControls } from 'leva';
 // import { Grid, EffectComposer } from '@react-three/postprocessing';
 import WorldData from './custom.geo.min.json';
+import MapLegend from './components/MapLegend';
+
+const points = [1, 10, 15, 20, 90];
+
+type NumberArray = {
+  [index: number]: number;
+};
 
 type WorldFeaturesType = {
   geometry: {
@@ -32,10 +39,15 @@ type WorldDataType = {
 };
 
 type CellProps = {
-  color: string;
-  shape: THREE.Shape;
-  fillOpacity: number;
-  index: number;
+  readonly color: string;
+  readonly shape: THREE.Shape;
+  readonly fillOpacity: number;
+  readonly index: number;
+  setState: (value: boolean) => void;
+};
+
+type SvgProps = {
+  setState: (value: boolean) => void;
 };
 
 window.THREE = THREE;
@@ -47,7 +59,7 @@ console.log('WorldData', WorldData);
  * @param polygon
  * @returns
  */
-const drawExtrudeShape = (polygon: any[]): THREE.Shape => {
+const drawExtrudeShape = (polygon: NumberArray[]): THREE.Shape => {
   const shape = new THREE.Shape();
   polygon.forEach((p, index) => {
     if (index === 0) {
@@ -100,7 +112,13 @@ const WorldDataToShapes = (data: WorldFeaturesType[]) => {
 
 // const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
-const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
+const Cell: FC<CellProps> = ({
+  color,
+  shape,
+  fillOpacity,
+  index,
+  setState,
+}) => {
   const [hovered, hover] = useState(false);
 
   return (
@@ -119,9 +137,17 @@ const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
         transparent
       />
       <shapeBufferGeometry args={[shape]} />
-      {index === -1 && (
-        <Html wrapperClass="role">
+      {points.includes(index) && (
+        <Html
+          wrapperClass="role"
+          position={[shape.currentPoint.x, shape.currentPoint.y, 0]}
+          zIndexRange={[100, 0]}
+        >
           <img
+            onClick={(e) => {
+              console.log('e', e);
+              setState(true);
+            }}
             src="https://www.ymlx8.com/uploads/29d2d21a71f1854e1bc4cbaadd5db8ef.jpg"
             alt="author"
           />
@@ -131,7 +157,7 @@ const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
   );
 };
 
-function Svg() {
+const Svg: FC<SvgProps> = ({ setState }) => {
   const [center, setCenter] = useState(() => new Vector3(0, 0, 0));
   const ref = useRef<THREE.Group>(null!);
   const { mapRotationZ, mapScale } = useControls({
@@ -143,7 +169,7 @@ function Svg() {
     mapScale: {
       min: 0.01,
       max: 1,
-      value: 0.05,
+      value: 1,
     },
   });
 
@@ -182,85 +208,49 @@ function Svg() {
               index={index}
               {...props}
               color="#2196f3"
+              setState={setState}
             />
           ))}
         </group>
       </mesh>
     </Center>
   );
-}
-
-function MapHtml({ setState }: { setState: (val: boolean) => void }) {
-  const { positionX, positionY, positionZ } = useControls({
-    positionX: {
-      min: -100,
-      max: 100,
-      value: 0,
-    },
-    positionY: {
-      min: -100,
-      max: 100,
-      value: 0,
-    },
-    positionZ: {
-      min: -100,
-      max: 100,
-      value: 0,
-    },
-  });
-
-  return (
-    <group>
-      <Html position={[positionX, positionY, positionZ]} wrapperClass="role">
-        <img
-          onClick={(e) => setState(true)}
-          src="https://www.meishujixun.com/uploads/b8b21c9f81947095ace9e9eeab39f966.jpg"
-          alt="author"
-        />
-      </Html>
-      <Html position={[0, 0, 0]} wrapperClass="role">
-        <img
-          onClick={(e) => setState(true)}
-          src="https://www.ymlx8.com/uploads/29d2d21a71f1854e1bc4cbaadd5db8ef.jpg"
-          alt="author"
-        />
-      </Html>
-    </group>
-  );
-}
+};
 
 function App() {
   const [state, setState] = useState<boolean>(false);
 
   return (
-    <div id="canvas-container">
-      <Canvas
-        orthographic
-        camera={{
-          position: [0, 0, 32],
-          zoom: 64,
-          near: 0.1,
-          far: 64,
-        }}
-      >
-        {/* <color attach="background" args={[243, 243, 243]} /> */}
-        <React.Suspense fallback={null}>
-          <Svg />
-        </React.Suspense>
-        <MapHtml setState={setState} />
-        <gridHelper />
-        <axesHelper />
-        {/* <EffectComposer>
+    <>
+      <div id="canvas-container">
+        <Canvas
+          orthographic
+          camera={{
+            position: [0, 0, 32],
+            zoom: 64,
+            near: 0.1,
+            far: 64,
+          }}
+        >
+          {/* <color attach="background" args={[243, 243, 243]} /> */}
+          <React.Suspense fallback={null}>
+            <Svg setState={setState} />
+          </React.Suspense>
+          <gridHelper />
+          <axesHelper />
+          {/* <EffectComposer>
           <Grid scale={scale} />
         </EffectComposer> */}
-        <ArcballControls />
-        {/* <MapControls maxZoom={1.6} minZoom={0.2} /> */}
-        <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-          {/* <GizmoViewcube /> */}
-          <GizmoViewport />
-        </GizmoHelper>
-        <OrbitControls makeDefault />
-      </Canvas>
+          <ArcballControls />
+          {/* <MapControls maxZoom={1.6} minZoom={0.2} /> */}
+          <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+            {/* <GizmoViewcube /> */}
+            <GizmoViewport />
+          </GizmoHelper>
+          <OrbitControls makeDefault />
+        </Canvas>
+      </div>
+      <MapLegend />
       <Drawer anchor={'right'} open={state} onClose={() => setState(false)}>
         <div style={{ width: 400 }}>
           <img
@@ -270,7 +260,7 @@ function App() {
           />
         </div>
       </Drawer>
-    </div>
+    </>
   );
 }
 
