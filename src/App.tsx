@@ -12,11 +12,12 @@ import {
 } from '@react-three/drei';
 import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
-import Drawer from '@mui/material/Drawer';
 import { useControls } from 'leva';
 // import { Grid, EffectComposer } from '@react-three/postprocessing';
 import WorldData from './custom.geo.min.json';
 import MapLegend from './components/MapLegend';
+import MapDrawer from './components/MapDrawer';
+import useStoreMapDrawer from './hooks';
 
 const points = [1, 10, 15, 20, 90];
 
@@ -43,12 +44,9 @@ type CellProps = {
   readonly shape: THREE.Shape;
   readonly fillOpacity: number;
   readonly index: number;
-  setState: (value: boolean) => void;
 };
 
-type SvgProps = {
-  setState: (value: boolean) => void;
-};
+type SvgProps = {};
 
 window.THREE = THREE;
 
@@ -112,14 +110,9 @@ const WorldDataToShapes = (data: WorldFeaturesType[]) => {
 
 // const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
-const Cell: FC<CellProps> = ({
-  color,
-  shape,
-  fillOpacity,
-  index,
-  setState,
-}) => {
+const Cell: FC<CellProps> = ({ color, shape, fillOpacity, index }) => {
   const [hovered, hover] = useState(false);
+  const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
     <mesh
@@ -146,7 +139,7 @@ const Cell: FC<CellProps> = ({
           <img
             onClick={(e) => {
               console.log('e', e);
-              setState(true);
+              setVisible(true);
             }}
             src="https://www.ymlx8.com/uploads/29d2d21a71f1854e1bc4cbaadd5db8ef.jpg"
             alt="author"
@@ -157,9 +150,10 @@ const Cell: FC<CellProps> = ({
   );
 };
 
-const Svg: FC<SvgProps> = ({ setState }) => {
+const Svg: FC<SvgProps> = () => {
   const [center, setCenter] = useState(() => new Vector3(0, 0, 0));
   const ref = useRef<THREE.Group>(null!);
+
   const { mapRotationZ, mapScale } = useControls({
     mapRotationZ: {
       min: -5,
@@ -208,7 +202,6 @@ const Svg: FC<SvgProps> = ({ setState }) => {
               index={index}
               {...props}
               color="#2196f3"
-              setState={setState}
             />
           ))}
         </group>
@@ -218,8 +211,6 @@ const Svg: FC<SvgProps> = ({ setState }) => {
 };
 
 function App() {
-  const [state, setState] = useState<boolean>(false);
-
   return (
     <>
       <div id="canvas-container">
@@ -234,7 +225,7 @@ function App() {
         >
           {/* <color attach="background" args={[243, 243, 243]} /> */}
           <React.Suspense fallback={null}>
-            <Svg setState={setState} />
+            <Svg />
           </React.Suspense>
           <gridHelper />
           <axesHelper />
@@ -251,15 +242,7 @@ function App() {
         </Canvas>
       </div>
       <MapLegend />
-      <Drawer anchor={'right'} open={state} onClose={() => setState(false)}>
-        <div style={{ width: 400 }}>
-          <img
-            src="http://image.9game.cn/2020/8/26/171832690.jpg"
-            alt="cover"
-            style={{ width: '100%' }}
-          />
-        </div>
-      </Drawer>
+      <MapDrawer />
     </>
   );
 }
