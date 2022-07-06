@@ -1,3 +1,5 @@
+@import './custom.scss';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,29 +13,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-#canvas-container {
-  width: 100vw;
-  height: 100vh;
-}
-
-.role {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #fff;
-  overflow: hidden;
-}
-.role img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.MuiDrawerMap .MuiBackdrop-root {
-  opacity: 0 !important;
-}
-.MuiDrawerMap .MuiPaper-root {
-  background: rgba(0, 0, 0, 0.8);
 }

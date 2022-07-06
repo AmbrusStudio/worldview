@@ -1,0 +1,26 @@
+#canvas-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.role {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.MuiDrawerMap {
+  .MuiBackdrop-root {
+    opacity: 0 !important;
+  }
+  .MuiPaper-root {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
