@@ -18,26 +18,10 @@ import WorldData from './custom.geo.min.json';
 import MapLegend from './components/MapLegend';
 import MapDrawer from './components/MapDrawer';
 import useStoreMapDrawer from './hooks';
+import { worldDataToShapes } from './utils';
+import { WorldFeaturesType } from './types/index.d';
 
 const points = [1, 10, 15, 20, 90];
-
-type NumberArray = {
-  [index: number]: number;
-};
-
-type WorldFeaturesType = {
-  geometry: {
-    coordinates: any[];
-    type: 'Polygon' | 'MultiPolygon';
-  };
-  properties: {};
-  type: 'Feature';
-};
-
-type WorldDataType = {
-  features: WorldFeaturesType[];
-  type: 'FeatureCollection';
-};
 
 type CellProps = {
   readonly color: string;
@@ -51,62 +35,6 @@ type SvgProps = {};
 window.THREE = THREE;
 
 console.log('WorldData', WorldData);
-
-/**
- * draw Extrude Shape
- * @param polygon
- * @returns
- */
-const drawExtrudeShape = (polygon: NumberArray[]): THREE.Shape => {
-  const shape = new THREE.Shape();
-  polygon.forEach((p, index) => {
-    if (index === 0) {
-      shape.moveTo(p[0], p[1]);
-    }
-    shape.lineTo(p[0], p[1]);
-  });
-
-  return shape;
-};
-
-/**
- * World Data To Shapes
- * @param data
- * @returns
- */
-const WorldDataToShapes = (data: WorldFeaturesType[]) => {
-  return data.flatMap((feature) => {
-    const paths: {
-      shape: THREE.Shape;
-      color: string;
-      fillOpacity: number;
-    }[] = [];
-
-    if (feature.geometry.type === 'MultiPolygon') {
-      feature.geometry.coordinates.forEach((points) => {
-        points.forEach((p: any[]) => {
-          paths.push({
-            shape: drawExtrudeShape(p),
-            color: '#2196f3',
-            fillOpacity: 1,
-          });
-        });
-      });
-    }
-
-    if (feature.geometry.type === 'Polygon') {
-      feature.geometry.coordinates.forEach((p) => {
-        paths.push({
-          shape: drawExtrudeShape(p),
-          color: '#2196f3',
-          fillOpacity: 1,
-        });
-      });
-    }
-
-    return paths;
-  });
-};
 
 // const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
@@ -168,7 +96,7 @@ const Svg: FC<SvgProps> = () => {
   });
 
   const worldShapes = useMemo(
-    () => WorldDataToShapes(WorldData.features as WorldFeaturesType[]),
+    () => worldDataToShapes(WorldData.features as WorldFeaturesType[]),
     []
   );
 
