@@ -6,42 +6,60 @@ import { Stack } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import useStoreMapDrawer from '../../hooks';
 
-const LegendTitle = styled.p`
-  /* font-family: 'Montserrat'; */
+const VolSerialNumber = styled.p`
+  /* font-family: 'SF Pro'; */
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #ff4125;
   padding: 0;
-  margin: 0 0 12px 0;
+  margin: 12px 0 0 0;
 `;
 
-const LegendItemDot = styled.div<{ color: string }>`
-  width: 16px;
-  height: 16px;
-  background: ${(p) => p.color || '#fff'};
-  border-radius: 50%;
-`;
-
-const LegendItemText = styled.span`
-  /* font-family: 'Montserrat'; */
+const VolTitle = styled.span`
+  /* font-family: 'SF Pro'; */
   font-style: normal;
-  font-weight: 600;
+  font-weight: 590;
   font-size: 16px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on, 'lnum' on;
-  color: rgba(0, 0, 0, 0.4);
+  line-height: 19px;
+  text-transform: capitalize;
+  color: #ffffff;
 `;
 
-const LegendData = [
+const DrawerInfoData = [
   {
-    color: '#28b5f9',
-    value: '2100',
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'Roaming in the dark',
   },
   {
-    color: '#BED2DD',
-    value: '2022',
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'It All Falls Down',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'Roaming in the dark',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'It All Falls Down',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'Roaming in the dark',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'It All Falls Down',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'Roaming in the dark',
+  },
+  {
+    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+    title: 'It All Falls Down',
   },
 ];
 
@@ -50,14 +68,36 @@ const MapDrawer: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
-    <Drawer anchor={'right'} open={visible} onClose={() => setVisible(false)}>
-      <Box component="div" sx={{ width: 400 }}>
-        <img
-          src="http://image.9game.cn/2020/8/26/171832690.jpg"
-          alt="cover"
-          style={{ width: '100%' }}
-        />
-      </Box>
+    <Drawer
+      anchor={'right'}
+      open={visible}
+      onClose={() => setVisible(false)}
+      hideBackdrop={false}
+      className="MuiDrawerMap"
+    >
+      <Stack spacing={3} sx={{ width: 480, padding: '36px' }}>
+        {DrawerInfoData.map((vol, index) => (
+          <Box component="div">
+            <Box
+              component="div"
+              key={index}
+              sx={{
+                border: '2px solid rgba(255, 255, 255, 0.25)',
+                padding: '12px',
+                height: 220,
+              }}
+            >
+              <img
+                src={vol.src}
+                alt="cover"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </Box>
+            <VolSerialNumber>Vol.{index + 1}</VolSerialNumber>
+            <VolTitle>{vol.title}</VolTitle>
+          </Box>
+        ))}
+      </Stack>
     </Drawer>
   );
 };

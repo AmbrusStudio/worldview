@@ -30,3 +30,10 @@ code {
   height: 100%;
   object-fit: cover;
 }
+
+.MuiDrawerMap .MuiBackdrop-root {
+  opacity: 0 !important;
+}
+.MuiDrawerMap .MuiPaper-root {
+  background: rgba(0, 0, 0, 0.8);
+}
