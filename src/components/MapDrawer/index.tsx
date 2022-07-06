@@ -28,36 +28,48 @@ const VolTitle = styled.span`
   color: #ffffff;
 `;
 
+const VolLink = styled.a`
+  text-decoration: none;
+`;
+
 const DrawerInfoData = [
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'Roaming in the dark',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'It All Falls Down',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'Roaming in the dark',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'It All Falls Down',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'Roaming in the dark',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'It All Falls Down',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'Roaming in the dark',
   },
   {
+    id: 10000,
     src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
     title: 'It All Falls Down',
   },
@@ -77,7 +89,11 @@ const MapDrawer: FC = () => {
     >
       <Stack spacing={3} sx={{ width: 480, padding: '36px' }}>
         {DrawerInfoData.map((vol, index) => (
-          <Box component="div">
+          <VolLink
+            target="_blank"
+            href={`/vol/${vol.id + index}`}
+            rel="noreferrer"
+          >
             <Box
               component="div"
               key={index}
@@ -95,7 +111,7 @@ const MapDrawer: FC = () => {
             </Box>
             <VolSerialNumber>Vol.{index + 1}</VolSerialNumber>
             <VolTitle>{vol.title}</VolTitle>
-          </Box>
+          </VolLink>
         ))}
       </Stack>
     </Drawer>
