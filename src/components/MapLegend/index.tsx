@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
-
 import styled from '@emotion/styled';
-import Box from '@mui/material/Box';
 import { Stack } from '@mui/material';
+import Box from '@mui/material/Box';
+import React, { FC } from 'react';
 
 const LegendTitle = styled.p`
   /* font-family: 'Montserrat'; */

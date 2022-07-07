@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { WorldFeaturesType, NumberArray } from '../types/index.d';
+
+import { NumberArray, WorldFeaturesType } from '../types/index.d';
 
 /**
  * draw Extrude Shape

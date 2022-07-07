@@ -1,16 +1,17 @@
-import { useRef, useMemo, useEffect, useState, FC } from 'react';
 import { Center } from '@react-three/drei';
+import { useControls } from 'leva';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
-import { useControls } from 'leva';
-import WorldData from '../../custom.geo.min.json';
+
 import MapShape from '../../components/MapShape';
-import { worldDataToShapes } from '../../utils';
+import WorldData from '../../custom.geo.min.json';
 import { WorldFeaturesType } from '../../types/index.d';
+import { worldDataToShapes } from '../../utils';
 
-type MapGroupProps = {};
+// type MapGroupProps = {};
 
-const MapGroup: FC<MapGroupProps> = () => {
+const MapGroup: FC = () => {
   const [center, setCenter] = useState(() => new Vector3(0, 0, 0));
   const ref = useRef<THREE.Group>(null!);
 

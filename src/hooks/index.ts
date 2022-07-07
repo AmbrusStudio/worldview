@@ -1,5 +1,5 @@
-import create from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
+import create from 'zustand';
 
 type State = {
   visible: boolean;

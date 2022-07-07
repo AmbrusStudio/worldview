@@ -1,9 +1,9 @@
+import styled from '@emotion/styled';
+import { Stack } from '@mui/material';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import { FC } from 'react';
 
-import styled from '@emotion/styled';
-import Box from '@mui/material/Box';
-import { Stack } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
 import useStoreMapDrawer from '../../hooks';
 
 const VolSerialNumber = styled.p`
@@ -93,6 +93,7 @@ const MapDrawer: FC = () => {
             target="_blank"
             href={`/vol/${vol.id + index}`}
             rel="noreferrer"
+            key={index}
           >
             <Box
               component="div"

@@ -1,12 +1,10 @@
-import React, { FC } from 'react';
-import { Html } from '@react-three/drei';
 import styled from '@emotion/styled';
-import Box from '@mui/material/Box';
-import { Stack } from '@mui/material';
-import useStoreMapDrawer from '../../hooks';
-import { drawExtrudeShape } from '../../utils';
-import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
+import { Html } from '@react-three/drei';
+import React, { FC } from 'react';
+
 import CampsLogoOne from '../../assets/images/camps-logo-1.svg';
+import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
+import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
 const Wrapper = styled.div``;

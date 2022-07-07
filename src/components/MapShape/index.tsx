@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { FC, useState } from 'react';
 import * as THREE from 'three';
 
 type MapShapeProps = {

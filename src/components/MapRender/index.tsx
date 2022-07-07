@@ -1,21 +1,17 @@
-import { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
 import {
   // MapControls,
   ArcballControls,
-  Html,
   GizmoHelper,
   GizmoViewport,
   OrbitControls,
-  // GizmoViewcube,
-  Center,
 } from '@react-three/drei';
-import { Box3, Sphere, Vector3 } from 'three';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
 import * as THREE from 'three';
-import { useControls } from 'leva';
-import WorldData from '../../custom.geo.min.json';
+
 import MapCamp from '../../components/MapCamp';
 import MapGroup from '../../components/MapGroup';
+import WorldData from '../../custom.geo.min.json';
 
 window.THREE = THREE;
 
