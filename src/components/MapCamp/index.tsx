@@ -7,6 +7,7 @@ import useStoreMapDrawer from '../../hooks';
 import { drawExtrudeShape } from '../../utils';
 import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
 import CampsLogoOne from '../../assets/images/camps-logo-1.svg';
+import ArrowRight from '../Icons/ArrowRight';
 
 const Wrapper = styled.div``;
 const Camps = styled.div`
@@ -19,58 +20,89 @@ const Camps = styled.div`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background: #ff4125;
+    .camp-icon {
+      display: inline-block;
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
   img {
   }
   span {
     /* font-family: 'Montserrat'; */
     font-style: normal;
-    font-weight: 600;
+    font-weight: 600px;
     font-size: 20px;
     line-height: 24px;
     text-transform: uppercase;
     color: #ffffff;
-    margin-left: 12px;
+    margin: 0 12px;
   }
+  .camp-icon {
+    display: none;
+    transform: translateX(-10px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+  }
+`;
+
+const Roles = styled.div`
+  display: grid;
+  margin-top: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 12px;
 `;
 
 const Role = styled.div`
   width: 80px;
   height: 80px;
-  border-radius: 50%;
+  border-radius: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    width: auto;
+    padding: 0 22px;
+    background: #ff4125;
+    img {
+      display: none;
+    }
+    span {
+      display: initial;
+    }
+    .role-icon {
+      display: inline-block;
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+  span {
+    display: none;
+    /* font-family: 'Montserrat'; */
+    font-style: italic;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+    margin: 0 12px 0 0;
+  }
+  .role-icon {
+    color: #ffffff;
+    display: none;
+    transform: translateX(-10px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+  }
 `;
-
-const LegendItemDot = styled.div<{ color: string }>`
-  width: 16px;
-  height: 16px;
-  background: ${(p) => p.color || '#fff'};
-  border-radius: 50%;
-`;
-
-const LegendItemText = styled.span`
-  /* font-family: 'Montserrat'; */
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  font-feature-settings: 'tnum' on, 'lnum' on;
-  color: rgba(0, 0, 0, 0.4);
-`;
-
-const LegendData = [
-  {
-    color: '#28b5f9',
-    value: '2100',
-  },
-  {
-    color: '#BED2DD',
-    value: '2022',
-  },
-];
 
 const camps = [
   {
@@ -81,14 +113,32 @@ const camps = [
     roles: [
       {
         src: CampsRoleOneOne,
+        name: 'NANA',
         alt: 'role1',
       },
       {
         src: CampsRoleOneOne,
+        name: 'NANA',
         alt: 'role1',
       },
       {
         src: CampsRoleOneOne,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleOneOne,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleOneOne,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleOneOne,
+        name: 'NANA',
         alt: 'role1',
       },
     ],
@@ -102,6 +152,17 @@ const camps = [
     roles: [
       {
         src: CampsRoleOneOne,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleOneOne,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleOneOne,
+        name: 'NANA',
         alt: 'role1',
       },
     ],
@@ -129,15 +190,18 @@ const MapLegend: FC = () => {
             >
               <img src={camp.logo} alt={camp.name} />
               <span>{camp.name}</span>
+              <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
             </Camps>
 
-            <Stack spacing={1} direction="row" sx={{ marginTop: '12px' }}>
+            <Roles>
               {camp.roles.map((role, indexJ) => (
                 <Role key={indexJ}>
                   <img src={role.src} alt={role.alt} />
+                  <span>{role.name}</span>
+                  <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
                 </Role>
               ))}
-            </Stack>
+            </Roles>
           </Wrapper>
         </Html>
       ))}
