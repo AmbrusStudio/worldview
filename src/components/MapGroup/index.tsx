@@ -5,7 +5,7 @@ import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
 
 import MapShape from '../../components/MapShape';
-import WorldData from '../../custom.geo.medium.json';
+import WorldData from '../../custom.geo.low.json';
 import { WorldFeaturesType } from '../../types/index.d';
 import { worldDataToShapes } from '../../utils';
 

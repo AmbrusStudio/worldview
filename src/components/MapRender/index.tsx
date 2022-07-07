@@ -17,13 +17,7 @@ function MapRender() {
         <Canvas
           className="canvas-map"
           orthographic
-          // camera={{
-          //   position: [0, 0, 32],
-          //   zoom: 64,
-          //   near: 0.1,
-          //   far: 64,
-          // }}
-          camera={{ position: [0, 0, 50], zoom: 10, up: [0, 0, 1], far: 10000 }}
+          camera={{ position: [0, 0, 50], zoom: 6, up: [0, 0, 1], far: 10000 }}
         >
           <Suspense fallback={null}>
             <MapGroup />
@@ -32,10 +26,9 @@ function MapRender() {
           <gridHelper />
           <axesHelper />
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-            {/* <GizmoViewcube /> */}
             <GizmoViewport />
           </GizmoHelper>
-          <MapControls />
+          <MapControls minZoom={4} maxZoom={8} enableRotate={false} />
         </Canvas>
       </div>
     </>
