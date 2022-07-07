@@ -1,5 +1,4 @@
 import { Center } from '@react-three/drei';
-import { useControls } from 'leva';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
@@ -16,19 +15,6 @@ console.log('WorldData', WorldData);
 const MapGroup: FC = () => {
   const [center, setCenter] = useState(() => new Vector3(0, 0, 0));
   const ref = useRef<THREE.Group>(null!);
-
-  const { mapRotationZ, mapScale } = useControls({
-    mapRotationZ: {
-      min: -5,
-      max: 5,
-      value: 0,
-    },
-    mapScale: {
-      min: 0.01,
-      max: 1,
-      value: 1,
-    },
-  });
 
   const worldShapes = useMemo(
     () => worldDataToShapes(WorldData.features as WorldFeaturesType[]),
@@ -54,12 +40,7 @@ const MapGroup: FC = () => {
     <Center position={[0, 0, 0]}>
       <mesh>
         <meshBasicMaterial color={'red'} transparent />
-        <group
-          position={center}
-          ref={ref}
-          rotation={[0, 0, mapRotationZ]}
-          scale={new Vector3(mapScale, mapScale, mapScale)}
-        >
+        <group position={center} ref={ref}>
           {worldShapes.map((props: any, index: number) => (
             <MapShape
               key={props.shape.uuid}

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { Box } from '@mui/material';
 import { Html } from '@react-three/drei';
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import CampsLogoOne from '../../assets/images/camps-logo-1.svg';
 import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
@@ -104,6 +105,25 @@ const Role = styled.div`
   }
 `;
 
+const points = [
+  {
+    x: -82.96578304719736,
+    y: 8.225027980985985,
+  },
+  {
+    x: 13.075822381246752,
+    y: 2.267097072759015,
+  },
+  {
+    x: 113.52441406249989,
+    y: 42.4511718750218,
+  },
+  {
+    x: 89.18457031249987,
+    y: 17.361328125009244,
+  },
+];
+
 const camps = [
   {
     x: -82.96578304719736,
@@ -203,6 +223,20 @@ const MapLegend: FC = () => {
               ))}
             </Roles>
           </Wrapper>
+        </Html>
+      ))}
+
+      {points.map((point, index) => (
+        <Html wrapperClass="role" position={[point.x, point.y, 0]} key={index}>
+          <Box
+            component="div"
+            sx={{
+              width: 10,
+              height: 10,
+              backgroundColor: 'red',
+              borderRadius: '50%',
+            }}
+          ></Box>
         </Html>
       ))}
     </group>
