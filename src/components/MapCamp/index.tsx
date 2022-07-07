@@ -7,7 +7,9 @@ import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
 import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  user-select: none;
+`;
 const Camps = styled.div`
   /* width: 60px; */
   height: 60px;

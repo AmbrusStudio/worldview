@@ -5,9 +5,11 @@ import { Box3, Sphere, Vector3 } from 'three';
 import * as THREE from 'three';
 
 import MapShape from '../../components/MapShape';
-import WorldData from '../../custom.geo.min.json';
+import WorldData from '../../custom.geo.medium.json';
 import { WorldFeaturesType } from '../../types/index.d';
 import { worldDataToShapes } from '../../utils';
+
+console.log('WorldData', WorldData);
 
 // type MapGroupProps = {};
 
@@ -51,6 +53,7 @@ const MapGroup: FC = () => {
   return (
     <Center position={[0, 0, 0]}>
       <mesh>
+        <meshBasicMaterial color={'red'} transparent />
         <group
           position={center}
           ref={ref}
