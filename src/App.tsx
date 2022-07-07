@@ -126,6 +126,7 @@ function App() {
     <>
       <div id="canvas-container">
         <Canvas
+          className="canvas-map"
           orthographic
           camera={{
             position: [0, 0, 32],
