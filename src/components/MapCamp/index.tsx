@@ -107,50 +107,26 @@ const Role = styled.div`
 
 const points = [
   {
-    x: -82.96578304719736,
-    y: 8.225027980985985,
+    x: 0,
+    y: 0,
   },
   {
-    x: 13.075822381246752,
-    y: 2.267097072759015,
+    x: 10,
+    y: 0,
   },
   {
-    x: 113.52441406249989,
-    y: 42.4511718750218,
-  },
-  {
-    x: 89.18457031249987,
-    y: 17.361328125009244,
+    x: 0,
+    y: 10,
   },
 ];
 
 const camps = [
   {
-    x: -82.96578304719736,
-    y: 8.225027980985985,
+    x: -1200,
+    y: 100,
     logo: CampsLogoOne,
     name: 'Hive',
     roles: [
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
       {
         src: CampsRoleOneOne,
         name: 'NANA',
@@ -165,16 +141,11 @@ const camps = [
   },
 
   {
-    x: 13.075822381246752,
-    y: 2.267097072759015,
+    x: 100,
+    y: 200,
     logo: CampsLogoOne,
     name: 'Hive',
     roles: [
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
       {
         src: CampsRoleOneOne,
         name: 'NANA',

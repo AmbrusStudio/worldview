@@ -3,12 +3,10 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 
+import MapBackground from '../../components/MapBackground';
 import MapCamp from '../../components/MapCamp';
-import MapGroup from '../../components/MapGroup';
 
 window.THREE = THREE;
-
-// const MapImage = 'https://i.imgur.com/YFPZzDv.jpg';
 
 function MapRender() {
   return (
@@ -17,10 +15,10 @@ function MapRender() {
         <Canvas
           className="canvas-map"
           orthographic
-          camera={{ position: [0, 0, 50], zoom: 6, up: [0, 0, 1], far: 10000 }}
+          camera={{ position: [0, 0, 50], zoom: 1, up: [0, 0, 1] }}
         >
           <Suspense fallback={null}>
-            <MapGroup />
+            <MapBackground />
           </Suspense>
           <MapCamp />
           <gridHelper />
@@ -28,7 +26,7 @@ function MapRender() {
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport />
           </GizmoHelper>
-          <MapControls minZoom={4} maxZoom={8} enableRotate={false} />
+          <MapControls minZoom={0.5} maxZoom={2} enableRotate={false} />
         </Canvas>
       </div>
     </>
