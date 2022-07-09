@@ -2051,7 +2051,7 @@
     utility-types "^3.10.0"
     zustand "^3.5.13"
 
-"@react-three/fiber@^8.0.27", "@react-three/fiber@latest":
+"@react-three/fiber@^8.0.27":
   version "8.0.27"
   resolved "https://registry.npmmirror.com/@react-three/fiber/-/fiber-8.0.27.tgz#06a3d3477282f1b8417cc319170866b79d4b3aaa"
   integrity sha512-9taELeNe3buKCkwwEJHL5vR0xEFQc+TMDZ+RFk0jcbBFEFKZTqUyNepjoZj6GT51838ddSO5qtmTFxuDTK3LBQ==
@@ -8340,13 +8340,6 @@ react-spring@^9.4.5:
     "@react-spring/three" "~9.4.5"
     "@react-spring/web" "~9.4.5"
     "@react-spring/zdog" "~9.4.5"
-
-react-three-fiber@^6.0.13:
-  version "6.0.13"
-  resolved "https://registry.npmmirror.com/react-three-fiber/-/react-three-fiber-6.0.13.tgz#6dbbc5d8d5fe94c49986e9c71024af7eaf68a441"
-  integrity sha512-uShQnkMVLvnzwf3YzY9mnzCnpmLpvTQkc0ycrtwk8fyjXmZt2695tLn3tufPF6uxq06UKJRKJcjCVCMXyUcEPQ==
-  dependencies:
-    "@react-three/fiber" latest
 
 react-three-gui@^0.4.2:
   version "0.4.2"

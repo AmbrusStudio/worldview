@@ -16,6 +16,8 @@ function MapRender() {
           className="canvas-map"
           orthographic
           camera={{ position: [0, 0, 50], zoom: 1, up: [0, 0, 1] }}
+          // linear
+          flat
         >
           <Suspense fallback={null}>
             <MapBackground />
