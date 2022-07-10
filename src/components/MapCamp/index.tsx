@@ -164,7 +164,7 @@ const MapLegend: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
-    <group>
+    <group position={[0, 0, 1]}>
       {camps.map((camp, index) => (
         <Html
           wrapperClass="role"
