@@ -1,10 +1,17 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
 import { Html } from '@react-three/drei';
 import { FC } from 'react';
 
 import CampsLogoOne from '../../assets/images/camps-logo-1.svg';
-import CampsRoleOneOne from '../../assets/images/camps-role-1-1.png';
+import CampsLogoFive from '../../assets/images/camps-logo-5.svg';
+import CampsLogoEmpty from '../../assets/images/camps-logo-empty.svg';
+import CampsRoleOne from '../../assets/images/camps-role-1.png';
+import CampsRoleTwo from '../../assets/images/camps-role-2.png';
+import CampsRoleThree from '../../assets/images/camps-role-3.png';
+import CampsRoleFour from '../../assets/images/camps-role-4.png';
+import CampsRoleFIve from '../../assets/images/camps-role-5.png';
+import CampsRoleSix from '../../assets/images/camps-role-6.png';
+import CampsRoleSeven from '../../assets/images/camps-role-7.png';
 import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
@@ -17,7 +24,7 @@ const Camps = styled.div`
   border-radius: 30px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  padding: 12px 23px 12px 17px;
+  padding: 12px 23px 12px 12px;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -35,12 +42,13 @@ const Camps = styled.div`
   span {
     /* font-family: 'Montserrat'; */
     font-style: normal;
-    font-weight: 600px;
+    font-weight: 600;
     font-size: 20px;
     line-height: 24px;
     text-transform: uppercase;
     color: #ffffff;
     margin: 0 12px;
+    white-space: nowrap;
   }
   .camp-icon {
     display: none;
@@ -105,54 +113,78 @@ const Role = styled.div`
   }
 `;
 
-const points = [
-  {
-    x: 0,
-    y: 0,
-  },
-  {
-    x: 10,
-    y: 0,
-  },
-  {
-    x: 0,
-    y: 10,
-  },
-];
-
 const camps = [
   {
-    x: -1200,
-    y: 100,
-    logo: CampsLogoOne,
-    name: 'Hive',
-    roles: [
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleOneOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-    ],
-  },
-
-  {
-    x: 100,
+    x: -826,
     y: 200,
     logo: CampsLogoOne,
     name: 'Hive',
     roles: [
       {
-        src: CampsRoleOneOne,
+        src: CampsRoleOne,
         name: 'NANA',
         alt: 'role1',
       },
       {
-        src: CampsRoleOneOne,
+        src: CampsRoleTwo,
+        name: 'NANA',
+        alt: 'role2',
+      },
+    ],
+  },
+
+  {
+    x: -534,
+    y: 2,
+    logo: CampsLogoEmpty,
+    name: 'Voodoo Children',
+    roles: [
+      {
+        src: CampsRoleThree,
+        name: 'NANA',
+        alt: 'role1',
+      },
+    ],
+  },
+  {
+    x: -320,
+    y: -226,
+    logo: CampsLogoEmpty,
+    name: 'Son of Gebbs',
+    roles: [
+      {
+        src: CampsRoleFour,
+        name: 'NANA',
+        alt: 'role1',
+      },
+    ],
+  },
+  {
+    x: 120,
+    y: 110,
+    logo: CampsLogoEmpty,
+    name: 'Rainbow Hackers',
+    roles: [
+      {
+        src: CampsRoleFIve,
+        name: 'NANA',
+        alt: 'role1',
+      },
+    ],
+  },
+  {
+    x: 487,
+    y: -36,
+    logo: CampsLogoFive,
+    name: 'A.E.R.L',
+    roles: [
+      {
+        src: CampsRoleSix,
+        name: 'NANA',
+        alt: 'role1',
+      },
+      {
+        src: CampsRoleSeven,
         name: 'NANA',
         alt: 'role1',
       },
@@ -164,11 +196,11 @@ const MapLegend: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
-    <group position={[0, 0, 1]}>
+    <group position={[0, 0, 10]}>
       {camps.map((camp, index) => (
         <Html
           wrapperClass="role"
-          position={[camp.x, camp.y, 0]}
+          position={[camp.x, camp.y, 1 + index]}
           zIndexRange={[100, 0]}
           key={index}
         >
@@ -194,20 +226,6 @@ const MapLegend: FC = () => {
               ))}
             </Roles>
           </Wrapper>
-        </Html>
-      ))}
-
-      {points.map((point, index) => (
-        <Html wrapperClass="role" position={[point.x, point.y, 0]} key={index}>
-          <Box
-            component="div"
-            sx={{
-              width: 10,
-              height: 10,
-              backgroundColor: 'red',
-              borderRadius: '50%',
-            }}
-          ></Box>
         </Html>
       ))}
     </group>
