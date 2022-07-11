@@ -13,7 +13,7 @@ function MapRender() {
           className="canvas-map"
           orthographic
           camera={{
-            position: [0, 0, 50],
+            position: [0, 0, 100],
             zoom: 1,
             up: [0, 0, 1],
           }}
