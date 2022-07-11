@@ -2,16 +2,7 @@ import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
 import { FC } from 'react';
 
-import CampsLogoOne from '../../assets/images/camps-logo-1.svg';
-import CampsLogoFive from '../../assets/images/camps-logo-5.svg';
-import CampsLogoEmpty from '../../assets/images/camps-logo-empty.svg';
-import CampsRoleOne from '../../assets/images/camps-role-1.png';
-import CampsRoleTwo from '../../assets/images/camps-role-2.png';
-import CampsRoleThree from '../../assets/images/camps-role-3.png';
-import CampsRoleFour from '../../assets/images/camps-role-4.png';
-import CampsRoleFIve from '../../assets/images/camps-role-5.png';
-import CampsRoleSix from '../../assets/images/camps-role-6.png';
-import CampsRoleSeven from '../../assets/images/camps-role-7.png';
+import { campData } from '../../data';
 import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
@@ -37,7 +28,14 @@ const Camps = styled.div`
       opacity: 1;
     }
   }
-  img {
+  & > div {
+    width: 36px;
+    height: 36px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
   span {
     /* font-family: 'Montserrat'; */
@@ -65,7 +63,7 @@ const Roles = styled.div`
   grid-gap: 12px;
 `;
 
-const Role = styled.div`
+const RoleWrapper = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 40px;
@@ -113,91 +111,12 @@ const Role = styled.div`
   }
 `;
 
-const camps = [
-  {
-    x: -826,
-    y: 200,
-    logo: CampsLogoOne,
-    name: 'Hive',
-    roles: [
-      {
-        src: CampsRoleOne,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleTwo,
-        name: 'NANA',
-        alt: 'role2',
-      },
-    ],
-  },
-
-  {
-    x: -534,
-    y: 2,
-    logo: CampsLogoEmpty,
-    name: 'Voodoo Children',
-    roles: [
-      {
-        src: CampsRoleThree,
-        name: 'NANA',
-        alt: 'role1',
-      },
-    ],
-  },
-  {
-    x: -320,
-    y: -226,
-    logo: CampsLogoEmpty,
-    name: 'Son of Gebbs',
-    roles: [
-      {
-        src: CampsRoleFour,
-        name: 'NANA',
-        alt: 'role1',
-      },
-    ],
-  },
-  {
-    x: 120,
-    y: 110,
-    logo: CampsLogoEmpty,
-    name: 'Rainbow Hackers',
-    roles: [
-      {
-        src: CampsRoleFIve,
-        name: 'NANA',
-        alt: 'role1',
-      },
-    ],
-  },
-  {
-    x: 487,
-    y: -36,
-    logo: CampsLogoFive,
-    name: 'A.E.R.L',
-    roles: [
-      {
-        src: CampsRoleSix,
-        name: 'NANA',
-        alt: 'role1',
-      },
-      {
-        src: CampsRoleSeven,
-        name: 'NANA',
-        alt: 'role1',
-      },
-    ],
-  },
-];
-
 const MapLegend: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
     <group position={[0, 0, 10]}>
-      {camps.map((camp, index) => (
+      {campData.map((camp, index) => (
         <Html
           wrapperClass="role"
           position={[camp.x, camp.y, 1 + index]}
@@ -211,18 +130,20 @@ const MapLegend: FC = () => {
                 setVisible(true);
               }}
             >
-              <img src={camp.logo} alt={camp.name} />
+              <div>
+                <img src={camp.logoSrc} alt={camp.name} />
+              </div>
               <span>{camp.name}</span>
               <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
             </Camps>
 
             <Roles>
               {camp.roles.map((role, indexJ) => (
-                <Role key={indexJ}>
-                  <img src={role.src} alt={role.alt} />
+                <RoleWrapper key={indexJ}>
+                  <img src={role.avatarSrc} alt={role.name} />
                   <span>{role.name}</span>
                   <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
-                </Role>
+                </RoleWrapper>
               ))}
             </Roles>
           </Wrapper>

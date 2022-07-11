@@ -3,7 +3,7 @@ export type WorldFeaturesType = {
     coordinates: any[];
     type: 'Polygon' | 'MultiPolygon';
   };
-  properties: {};
+  properties: object;
   type: 'Feature';
 };
 
