@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import { FC } from 'react';
 
 import useStoreMapDrawer from '../../hooks';
+import ArrowRight from '../Icons/ArrowRight';
 
 const VolSerialNumber = styled.p`
   /* font-family: 'SF Pro'; */
@@ -42,10 +43,13 @@ const MapDrawer: FC = () => {
       anchor={'right'}
       open={visible}
       onClose={() => setVisible(false)}
-      hideBackdrop={false}
+      hideBackdrop={true}
       className="MuiDrawerMap"
     >
-      <Stack spacing={3} sx={{ width: 480, padding: '36px' }}>
+      <Stack
+        spacing={3}
+        sx={{ width: 480, padding: '36px', overflowY: 'auto' }}
+      >
         {campVol.map((vol, index) => (
           <VolLink
             target="_blank"
@@ -73,6 +77,27 @@ const MapDrawer: FC = () => {
           </VolLink>
         ))}
       </Stack>
+      {visible && (
+        <Box
+          component="div"
+          sx={{
+            position: 'absolute',
+            top: 100,
+            left: -52,
+            width: '52px',
+            height: '52px',
+            background: '#FF4125',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+          onClick={() => setVisible(false)}
+        >
+          <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
+        </Box>
+      )}
     </Drawer>
   );
 };

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
 import { FC, useCallback } from 'react';
 
-import { campData, campVolData } from '../../data';
+import { campData } from '../../data';
 import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
@@ -115,8 +115,8 @@ const MapLegend: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
   const setCampVol = useStoreMapDrawer((state) => state.setCampVol);
 
-  const toggleVol = useCallback(() => {
-    setCampVol(campVolData);
+  const toggleVol = useCallback((index: number) => {
+    setCampVol(campData[index].vol);
   }, []);
 
   return (
@@ -133,7 +133,7 @@ const MapLegend: FC = () => {
               onClick={(e) => {
                 console.log('e', e);
                 setVisible(true);
-                toggleVol();
+                toggleVol(index);
               }}
             >
               <div>

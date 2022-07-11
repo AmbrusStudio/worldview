@@ -1,4 +1,4 @@
-import { Camp, CampVol } from '../types';
+import { Camp } from '../types';
 
 export const campData: Camp[] = [
   {
@@ -16,6 +16,48 @@ export const campData: Camp[] = [
         name: 'NANA',
       },
     ],
+    vol: [
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
+      },
+    ],
   },
   {
     x: -534,
@@ -26,6 +68,18 @@ export const campData: Camp[] = [
       {
         avatar: 'https://i.imgur.com/7KLfIqp.png',
         name: 'NANA',
+      },
+    ],
+    vol: [
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
       },
     ],
   },
@@ -40,6 +94,18 @@ export const campData: Camp[] = [
         name: 'NANA',
       },
     ],
+    vol: [
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'It All Falls Down',
+      },
+    ],
   },
   {
     x: 120,
@@ -50,6 +116,13 @@ export const campData: Camp[] = [
       {
         avatar: 'https://i.imgur.com/jagW222.png',
         name: 'NANA',
+      },
+    ],
+    vol: [
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
       },
     ],
   },
@@ -68,48 +141,12 @@ export const campData: Camp[] = [
         name: 'NANA',
       },
     ],
-  },
-];
-
-export const campVolData: CampVol[] = [
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
+    vol: [
+      {
+        id: 10000,
+        cover: 'http://image.9game.cn/2020/8/26/171832690.jpg',
+        title: 'Roaming in the dark',
+      },
+    ],
   },
 ];
