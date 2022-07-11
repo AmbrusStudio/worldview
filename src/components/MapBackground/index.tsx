@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 import MapCamp from '../../components/MapCamp';
 import MapGame from '../../components/MapGame';
@@ -7,10 +7,12 @@ import MapGame from '../../components/MapGame';
 
 const MapBackground: FC = () => {
   return (
-    <group>
-      <MapGame />
-      <MapCamp />
-    </group>
+    <Suspense fallback={null}>
+      <group>
+        <MapGame />
+        <MapCamp />
+      </group>
+    </Suspense>
   );
 };
 

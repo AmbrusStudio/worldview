@@ -1,5 +1,4 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
 
 import MapBackground from '../../components/MapBackground';
 import MapControlsHelper from '../../components/MapControlsHelper';
@@ -18,9 +17,7 @@ function MapRender() {
         }}
         flat
       >
-        <Suspense fallback={null}>
-          <MapBackground />
-        </Suspense>
+        <MapBackground />
         {process.env.NODE_ENV === 'development' && <MapHelper />}
         <MapControlsHelper />
       </Canvas>
