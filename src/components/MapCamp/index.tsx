@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
-import { campData } from '../../data';
+import { campData, campVolData } from '../../data';
 import useStoreMapDrawer from '../../hooks';
 import ArrowRight from '../Icons/ArrowRight';
 
@@ -113,6 +113,11 @@ const RoleWrapper = styled.div`
 
 const MapLegend: FC = () => {
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
+  const setCampVol = useStoreMapDrawer((state) => state.setCampVol);
+
+  const toggleVol = useCallback(() => {
+    setCampVol(campVolData);
+  }, []);
 
   return (
     <group position={[0, 0, 10]}>
@@ -128,10 +133,11 @@ const MapLegend: FC = () => {
               onClick={(e) => {
                 console.log('e', e);
                 setVisible(true);
+                toggleVol();
               }}
             >
               <div>
-                <img src={camp.logoSrc} alt={camp.name} />
+                <img src={camp.logo} alt={camp.name} />
               </div>
               <span>{camp.name}</span>
               <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
@@ -140,7 +146,7 @@ const MapLegend: FC = () => {
             <Roles>
               {camp.roles.map((role, indexJ) => (
                 <RoleWrapper key={indexJ}>
-                  <img src={role.avatarSrc} alt={role.name} />
+                  <img src={role.avatar} alt={role.name} />
                   <span>{role.name}</span>
                   <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
                 </RoleWrapper>

@@ -1,12 +1,18 @@
 export type Role = {
-  avatarSrc: string;
+  avatar: string;
   name: string;
 };
 
 export type Camp = {
   x: number;
   y: number;
-  logoSrc: string;
+  logo: string;
   name: string;
-  roles: role[];
+  roles: Role[];
+};
+
+export type CampVol = {
+  id: number;
+  cover: string;
+  title: string;
 };

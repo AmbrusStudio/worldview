@@ -32,51 +32,9 @@ const VolLink = styled.a`
   text-decoration: none;
 `;
 
-const DrawerInfoData = [
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'Roaming in the dark',
-  },
-  {
-    id: 10000,
-    src: 'http://image.9game.cn/2020/8/26/171832690.jpg',
-    title: 'It All Falls Down',
-  },
-];
-
 const MapDrawer: FC = () => {
   const visible = useStoreMapDrawer((state) => state.visible);
+  const campVol = useStoreMapDrawer((state) => state.campVol);
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
 
   return (
@@ -88,7 +46,7 @@ const MapDrawer: FC = () => {
       className="MuiDrawerMap"
     >
       <Stack spacing={3} sx={{ width: 480, padding: '36px' }}>
-        {DrawerInfoData.map((vol, index) => (
+        {campVol.map((vol, index) => (
           <VolLink
             target="_blank"
             href={`/vol/${vol.id + index}`}
@@ -105,7 +63,7 @@ const MapDrawer: FC = () => {
               }}
             >
               <img
-                src={vol.src}
+                src={vol.cover}
                 alt="cover"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
