@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
-import { FC, useCallback } from 'react';
+import { useThree } from '@react-three/fiber';
+import * as TWEEN from '@tweenjs/tween.js';
+import { FC, useCallback, useEffect } from 'react';
 
 import { campData } from '../../data';
 import useStoreMapDrawer from '../../hooks';
+import { useStoreMapControls } from '../../store';
 import ArrowRight from '../Icons/ArrowRight';
 
 const Wrapper = styled.div`
@@ -112,11 +115,52 @@ const RoleWrapper = styled.div`
 `;
 
 const MapLegend: FC = () => {
+  const { camera } = useThree();
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
   const setCampVol = useStoreMapDrawer((state) => state.setCampVol);
+  const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
+  const campCenter = useCallback(
+    (index: number) => {
+      if (!mapControlsRef) {
+        return;
+      }
+      console.log('mapControlsRef', mapControlsRef);
+
+      new TWEEN.Tween({
+        x: mapControlsRef.target.x,
+        y: mapControlsRef.target.y,
+        zoom: camera.zoom,
+      })
+        .to({ x: campData[index].x + 200, y: campData[index].y, zoom: 2 }, 800)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onUpdate((object) => {
+          // console.log('object', object);
+
+          mapControlsRef.target.setX(object.x);
+          mapControlsRef.target.setY(object.y);
+
+          camera.position.setX(object.x);
+          camera.position.setY(object.y);
+
+          camera.zoom = object.zoom;
+          camera.updateProjectionMatrix();
+        })
+        .start(); // Start the tween immediately.
+    },
+    [camera.zoom]
+  );
 
   const toggleVol = useCallback((index: number) => {
     setCampVol(campData[index].vol);
+    campCenter(index);
+  }, []);
+
+  useEffect(() => {
+    function animate(time: number) {
+      requestAnimationFrame(animate);
+      TWEEN.update(time);
+    }
+    requestAnimationFrame(animate);
   }, []);
 
   return (
@@ -131,7 +175,7 @@ const MapLegend: FC = () => {
           <Wrapper>
             <Camps
               onClick={(e) => {
-                console.log('e', e);
+                // console.log('e', e);
                 setVisible(true);
                 toggleVol(index);
               }}

@@ -4,7 +4,7 @@ import { planeHeight, planeWidth } from '../constants';
 import { NumberArray, WorldFeaturesType } from '../types/index.d';
 
 /**
- * draw Extrude Shape
+ * Draw Extrude Shape
  * @param polygon
  * @returns
  */

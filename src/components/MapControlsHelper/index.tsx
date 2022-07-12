@@ -1,12 +1,25 @@
 import { MapControls } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { MapControls as MapControlsImpl } from 'three-stdlib';
 
+import { useStoreMapControls } from '../../store';
 import { getMapZoomByContainer } from '../../utils';
 
 const MapControlsHelper = () => {
   const { camera, size } = useThree();
+  const mapControlsRef = useRef<MapControlsImpl>(null);
+  const setMapControlsRef = useStoreMapControls(
+    (state) => state.setMapControlsRef
+  );
+
+  // save MapControls Ref
+  useEffect(() => {
+    if (mapControlsRef.current) {
+      setMapControlsRef(mapControlsRef.current);
+    }
+  }, [mapControlsRef]);
 
   const limitPanningDistance = useCallback(
     (e?: THREE.Event) => {
@@ -40,9 +53,11 @@ const MapControlsHelper = () => {
   return (
     <>
       <MapControls
+        ref={mapControlsRef}
         enableRotate={false}
         minZoom={1}
         maxZoom={2}
+        zoomSpeed={0.3}
         onChange={(e) => {
           // console.log(e?.target);
           limitPanningDistance(e);
