@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { FC } from 'react';
 
-import useStoreMapDrawer from '../../hooks';
+import { useStoreMapDrawer } from '../../store';
 import ArrowRight from '../Icons/ArrowRight';
 
 const VolSerialNumber = styled.p`

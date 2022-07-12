@@ -10,7 +10,7 @@ type State = {
   setCampVol: (value: CampVol[]) => void;
 };
 
-const useStoreMapDrawer = create<State>((set) => ({
+export const useStoreMapDrawer = create<State>((set) => ({
   visible: false,
   campVol: [],
   setVisible: (value) => set({ visible: value }),
@@ -20,5 +20,3 @@ const useStoreMapDrawer = create<State>((set) => ({
 if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('useStoreMapDrawer', useStoreMapDrawer);
 }
-
-export default useStoreMapDrawer;
