@@ -29,3 +29,19 @@ export const getMapSizeByContainer = (width: number, height: number) => {
   const h = planeHeight[zoom];
   return [w, h];
 };
+
+/**
+ * Container exceeds map limits
+ * @param width
+ * @param height
+ * @returns
+ */
+export const isContainerExceedsMapLimits = (
+  width: number,
+  height: number
+): boolean => {
+  if (width > planeWidth[2] || height > planeHeight[2]) {
+    return true;
+  }
+  return false;
+};

@@ -5,7 +5,10 @@ import * as THREE from 'three';
 import { MapControls as MapControlsImpl } from 'three-stdlib';
 
 import { useStoreMapControls } from '../../store';
-import { getMapSizeByContainer } from '../../utils';
+import {
+  getMapSizeByContainer,
+  isContainerExceedsMapLimits,
+} from '../../utils';
 
 const MapControlsHelper = () => {
   const { camera, size } = useThree();
@@ -23,6 +26,11 @@ const MapControlsHelper = () => {
 
   const limitPanningDistance = useCallback(
     (e?: THREE.Event) => {
+      // map limit
+      if (isContainerExceedsMapLimits(size.width, size.height)) {
+        return;
+      }
+
       // 704.5 102
       // 1056.75 320
       const [w, h] = getMapSizeByContainer(size.width, size.height);
