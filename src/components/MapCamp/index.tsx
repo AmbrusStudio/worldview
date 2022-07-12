@@ -5,7 +5,6 @@ import * as TWEEN from '@tweenjs/tween.js';
 import { FC, useEffect, useMemo } from 'react';
 
 import { campData } from '../../data';
-import useStoreMapDrawer from '../../hooks';
 import { useStoreMapControls } from '../../store';
 import { getMapZoomByContainer } from '../../utils';
 import ArrowRight from '../Icons/ArrowRight';
@@ -117,8 +116,6 @@ const RoleWrapper = styled.div`
 
 const MapLegend: FC = () => {
   const { camera, size } = useThree();
-  const setVisible = useStoreMapDrawer((state) => state.setVisible);
-  const setCampVol = useStoreMapDrawer((state) => state.setCampVol);
   const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
 
   /**
@@ -137,7 +134,7 @@ const MapLegend: FC = () => {
       return;
     }
 
-    const x = campData[index].x * mapZoom + 200;
+    const x = campData[index].x * mapZoom;
     const y = campData[index].y * mapZoom;
 
     new TWEEN.Tween({
@@ -162,14 +159,6 @@ const MapLegend: FC = () => {
       .start(); // Start the tween immediately.
   };
 
-  /**
-   * toggle camp vol
-   */
-  const toggleVol = (index: number) => {
-    setCampVol(campData[index].vol);
-    campCenter(index);
-  };
-
   useEffect(() => {
     // Setup the animation loop.
     function animate(time: number) {
@@ -192,8 +181,7 @@ const MapLegend: FC = () => {
             <Camps
               onClick={() => {
                 // console.log('e', e);
-                setVisible(true);
-                toggleVol(index);
+                campCenter(index);
               }}
             >
               <div>
@@ -205,7 +193,12 @@ const MapLegend: FC = () => {
 
             <Roles>
               {camp.roles.map((role, indexJ) => (
-                <RoleWrapper key={indexJ}>
+                <RoleWrapper
+                  key={indexJ}
+                  onClick={() => {
+                    alert(role.name);
+                  }}
+                >
                   <img src={role.avatar} alt={role.name} />
                   <span>{role.name}</span>
                   <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
