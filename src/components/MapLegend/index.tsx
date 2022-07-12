@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import React, { FC } from 'react';
 
 const LegendTitle = styled.p`
-  /* font-family: 'Montserrat'; */
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -22,7 +22,7 @@ const LegendItemDot = styled.div<{ color: string }>`
 `;
 
 const LegendItemText = styled.span`
-  /* font-family: 'Montserrat'; */
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

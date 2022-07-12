@@ -42,7 +42,7 @@ const Camps = styled.div`
     }
   }
   span {
-    /* font-family: 'Montserrat'; */
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -98,7 +98,7 @@ const RoleWrapper = styled.div`
   }
   span {
     display: none;
-    /* font-family: 'Montserrat'; */
+    font-family: 'Montserrat', sans-serif;
     font-style: italic;
     font-weight: 700;
     font-size: 16px;
