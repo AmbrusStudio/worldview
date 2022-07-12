@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+import { planeHeight, planeWidth } from '../constants';
 import { NumberArray, WorldFeaturesType } from '../types/index.d';
 
 /**
@@ -56,4 +57,22 @@ export const worldDataToShapes = (data: WorldFeaturesType[]) => {
 
     return paths;
   });
+};
+
+/**
+ * Get map zoom by container
+ * @param width
+ * @param height
+ * @returns
+ */
+export const getMapZoomByContainer = (width: number, height: number) => {
+  let zoom: 1 | 2 = 1;
+
+  if (width > planeWidth[1] || height > planeHeight[1]) {
+    zoom = 2;
+  }
+
+  const w = planeWidth[zoom];
+  const h = planeHeight[zoom];
+  return [w, h];
 };
