@@ -4,7 +4,7 @@ import { FC, useMemo } from 'react';
 import * as THREE from 'three';
 
 import MapImage from '../../assets/images/map.png';
-import { getMapZoomByContainer } from '../../utils';
+import { getMapSizeByContainer } from '../../utils';
 
 // type MapGameProps = {};
 
@@ -12,7 +12,7 @@ const MapGame: FC = () => {
   const textureMap = useTexture(MapImage);
   const { size } = useThree();
   const [w, h] = useMemo(
-    () => getMapZoomByContainer(size.width, size.height),
+    () => getMapSizeByContainer(size.width, size.height),
     [size]
   );
 

@@ -2,11 +2,12 @@ import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import * as TWEEN from '@tweenjs/tween.js';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 
 import { campData } from '../../data';
 import useStoreMapDrawer from '../../hooks';
 import { useStoreMapControls } from '../../store';
+import { getMapZoomByContainer } from '../../utils';
 import ArrowRight from '../Icons/ArrowRight';
 
 const Wrapper = styled.div`
@@ -115,47 +116,62 @@ const RoleWrapper = styled.div`
 `;
 
 const MapLegend: FC = () => {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const setVisible = useStoreMapDrawer((state) => state.setVisible);
   const setCampVol = useStoreMapDrawer((state) => state.setCampVol);
   const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
-  const campCenter = useCallback(
-    (index: number) => {
-      if (!mapControlsRef) {
-        return;
-      }
-      console.log('mapControlsRef', mapControlsRef);
 
-      new TWEEN.Tween({
-        x: mapControlsRef.target.x,
-        y: mapControlsRef.target.y,
-        zoom: camera.zoom,
-      })
-        .to({ x: campData[index].x + 200, y: campData[index].y, zoom: 2 }, 800)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onUpdate((object) => {
-          // console.log('object', object);
-
-          mapControlsRef.target.setX(object.x);
-          mapControlsRef.target.setY(object.y);
-
-          camera.position.setX(object.x);
-          camera.position.setY(object.y);
-
-          camera.zoom = object.zoom;
-          camera.updateProjectionMatrix();
-        })
-        .start(); // Start the tween immediately.
-    },
-    [camera.zoom]
+  /**
+   * map zoom
+   */
+  const mapZoom = useMemo(
+    () => getMapZoomByContainer(size.width, size.height),
+    [size]
   );
 
-  const toggleVol = useCallback((index: number) => {
+  /**
+   * toggle camp
+   */
+  const campCenter = (index: number): void => {
+    if (!mapControlsRef) {
+      return;
+    }
+
+    const x = campData[index].x * mapZoom + 200;
+    const y = campData[index].y * mapZoom;
+
+    new TWEEN.Tween({
+      x: mapControlsRef.target.x,
+      y: mapControlsRef.target.y,
+      zoom: camera.zoom,
+    })
+      .to({ x: x, y: y, zoom: 2 }, 800)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate((object) => {
+        // console.log('object', object);
+
+        mapControlsRef.target.setX(object.x);
+        mapControlsRef.target.setY(object.y);
+
+        camera.position.setX(object.x);
+        camera.position.setY(object.y);
+
+        camera.zoom = object.zoom;
+        camera.updateProjectionMatrix();
+      })
+      .start(); // Start the tween immediately.
+  };
+
+  /**
+   * toggle camp vol
+   */
+  const toggleVol = (index: number) => {
     setCampVol(campData[index].vol);
     campCenter(index);
-  }, []);
+  };
 
   useEffect(() => {
+    // Setup the animation loop.
     function animate(time: number) {
       requestAnimationFrame(animate);
       TWEEN.update(time);
@@ -168,13 +184,13 @@ const MapLegend: FC = () => {
       {campData.map((camp, index) => (
         <Html
           wrapperClass="role"
-          position={[camp.x, camp.y, 1 + index]}
+          position={[camp.x * mapZoom, camp.y * mapZoom, 1 + index]}
           zIndexRange={[100, 0]}
           key={index}
         >
           <Wrapper>
             <Camps
-              onClick={(e) => {
+              onClick={() => {
                 // console.log('e', e);
                 setVisible(true);
                 toggleVol(index);

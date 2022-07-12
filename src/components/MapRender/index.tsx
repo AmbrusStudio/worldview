@@ -16,6 +16,7 @@ function MapRender() {
             position: [0, 0, 100],
             zoom: 1,
             up: [0, 0, 1],
+            far: 10000,
           }}
           flat
         >
