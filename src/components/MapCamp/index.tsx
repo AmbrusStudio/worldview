@@ -3,8 +3,9 @@ import { Html } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import * as TWEEN from '@tweenjs/tween.js';
 import { FC, useEffect, useMemo } from 'react';
+import useSWR from 'swr';
 
-import { campData } from '../../data';
+import { getWorldViewInfoApi } from '../../services/worldview';
 import { useStoreMapControls } from '../../store';
 import { getMapZoomByContainer } from '../../utils';
 import ArrowRight from '../Icons/ArrowRight';
@@ -34,6 +35,8 @@ const Camps = styled.div`
   & > div {
     width: 36px;
     height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
     img {
       width: 100%;
       height: 100%;
@@ -73,12 +76,13 @@ const RoleWrapper = styled.div`
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
+  cursor: pointer;
   transition: background 0.3s ease-in-out;
   &:hover {
     width: auto;
     padding: 0 22px;
     background: #ff4125;
-    img {
+    & > div {
       display: none;
     }
     span {
@@ -90,10 +94,16 @@ const RoleWrapper = styled.div`
       opacity: 1;
     }
   }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  & > div {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   span {
     display: none;
@@ -115,6 +125,11 @@ const RoleWrapper = styled.div`
 `;
 
 const MapLegend: FC = () => {
+  const { data, error } = useSWR<API.Response<API.Camp[]>>(
+    'api',
+    getWorldViewInfoApi
+  );
+
   const { camera, size } = useThree();
   const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
 
@@ -129,13 +144,10 @@ const MapLegend: FC = () => {
   /**
    * toggle camp
    */
-  const campCenter = (index: number): void => {
+  const campCenter = (x: number, y: number): void => {
     if (!mapControlsRef) {
       return;
     }
-
-    const x = campData[index].x * mapZoom;
-    const y = campData[index].y * mapZoom;
 
     new TWEEN.Tween({
       x: mapControlsRef.target.x,
@@ -168,46 +180,60 @@ const MapLegend: FC = () => {
     requestAnimationFrame(animate);
   }, []);
 
+  if (error) return <group></group>;
+  if (!data || !data?.data) return <group></group>;
+
   return (
     <group position={[0, 0, 10]}>
-      {campData.map((camp, index) => (
-        <Html
-          wrapperClass="role"
-          position={[camp.x * mapZoom, camp.y * mapZoom, 1 + index]}
-          zIndexRange={[100, 0]}
-          key={index}
-        >
-          <Wrapper>
-            <Camps
-              onClick={() => {
-                // console.log('e', e);
-                campCenter(index);
-              }}
-            >
-              <div>
-                <img src={camp.logo} alt={camp.name} />
-              </div>
-              <span>{camp.name}</span>
-              <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
-            </Camps>
+      {data?.data.map((camp, index) => {
+        const [x, y] = camp.coordinate.split(',');
+        const coordinateX = Number(x) * mapZoom;
+        const coordinateY = Number(y) * mapZoom;
 
-            <Roles>
-              {camp.roles.map((role, indexJ) => (
-                <RoleWrapper
-                  key={indexJ}
-                  onClick={() => {
-                    alert(role.name);
-                  }}
-                >
-                  <img src={role.avatar} alt={role.name} />
-                  <span>{role.name}</span>
-                  <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
-                </RoleWrapper>
-              ))}
-            </Roles>
-          </Wrapper>
-        </Html>
-      ))}
+        return (
+          <Html
+            wrapperClass="role"
+            position={[coordinateX, coordinateY, 1 + index]}
+            zIndexRange={[100, 0]}
+            key={index}
+          >
+            <Wrapper>
+              <Camps
+                onClick={() => {
+                  // console.log('e', e);
+                  campCenter(coordinateX, coordinateY);
+                }}
+              >
+                <div>
+                  <img src={camp.logo} alt={camp.name} />
+                </div>
+                <span>{camp.name}</span>
+                <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
+              </Camps>
+
+              <Roles>
+                {camp.ranger_list.map((role, indexJ) => (
+                  <RoleWrapper
+                    key={indexJ}
+                    onClick={() => {
+                      alert(role.name);
+                    }}
+                  >
+                    <div>
+                      <img src={role.avatar} alt={role.title} />
+                    </div>
+                    <span>{role.name}</span>
+                    <ArrowRight
+                      className="role-icon"
+                      sx={{ fontSize: '1em' }}
+                    />
+                  </RoleWrapper>
+                ))}
+              </Roles>
+            </Wrapper>
+          </Html>
+        );
+      })}
     </group>
   );
 };

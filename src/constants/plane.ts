@@ -1,3 +1,5 @@
+// TODO: The map needs to be scaled
+
 // plane width
 export const planeWidth = {
   1: 2510,
