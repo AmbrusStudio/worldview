@@ -7,10 +7,11 @@ import { getMapZoom } from '../utils';
 export function useMapZoom() {
   const { camera, size } = useThree();
   const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
-
   // set camera zoom
   useEffect(() => {
-    camera.zoom = getMapZoom(size.width, size.height);
+    const zoom = getMapZoom(size.width, size.height);
+
+    camera.zoom = zoom;
     camera.updateProjectionMatrix();
   }, [camera, size]);
 

@@ -20,7 +20,7 @@ const MapControlsHelper = () => {
     if (mapControlsRef.current) {
       setMapControlsRef(mapControlsRef.current);
     }
-  }, [mapControlsRef]);
+  }, [mapControlsRef, setMapControlsRef]);
 
   const limitPanningDistance = useCallback(
     (e?: THREE.Event) => {
@@ -53,7 +53,7 @@ const MapControlsHelper = () => {
         camera.position.setY(y < minY ? minY : maxY);
       }
     },
-    [camera.zoom, size]
+    [camera.zoom, camera.position, size]
   );
 
   return (

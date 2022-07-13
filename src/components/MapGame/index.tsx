@@ -18,7 +18,7 @@ const MapGame: FC = () => {
     if (mapRef.current) {
       setMapRef(mapRef.current);
     }
-  }, [mapRef]);
+  }, [mapRef, setMapRef]);
 
   return (
     <mesh position={[0, 0, 0]} onClick={(e) => console.log('point', e.point)}>

@@ -18,6 +18,7 @@
   },
   "plugins": [
     "react",
+    "react-hooks",
     "@typescript-eslint",
     "simple-import-sort",
     "unused-imports"
@@ -26,6 +27,8 @@
     "react/react-in-jsx-scope": "off",
     "unused-imports/no-unused-imports": "error",
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
