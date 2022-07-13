@@ -2,12 +2,11 @@ import styled from '@emotion/styled';
 import { Html } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import * as TWEEN from '@tweenjs/tween.js';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import useSWR from 'swr';
 
 import { getWorldViewInfoApi } from '../../services/worldview';
 import { useStoreMapControls } from '../../store';
-import { getMapZoomByContainer } from '../../utils';
 import { openWorldviewOrganization, openWorldviewRanger } from '../../utils';
 import ArrowRight from '../Icons/ArrowRight';
 
@@ -131,16 +130,8 @@ const MapLegend: FC = () => {
     getWorldViewInfoApi
   );
 
-  const { camera, size } = useThree();
+  const { camera } = useThree();
   const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
-
-  /**
-   * map zoom
-   */
-  const mapZoom = useMemo(
-    () => getMapZoomByContainer(size.width, size.height),
-    [size]
-  );
 
   /**
    * toggle camp
@@ -155,7 +146,7 @@ const MapLegend: FC = () => {
       y: mapControlsRef.target.y,
       zoom: camera.zoom,
     })
-      .to({ x: x, y: y, zoom: 2 }, 800)
+      .to({ x: x, y: y, zoom: mapControlsRef.maxZoom }, 800)
       .easing(TWEEN.Easing.Quadratic.Out)
       .onUpdate((object) => {
         // console.log('object', object);
@@ -191,13 +182,11 @@ const MapLegend: FC = () => {
     <group position={[0, 0, 10]}>
       {data?.data.map((camp, index) => {
         const [x, y] = camp.coordinate.split(',');
-        const coordinateX = Number(x) * mapZoom;
-        const coordinateY = Number(y) * mapZoom;
 
         return (
           <Html
             wrapperClass="role"
-            position={[coordinateX, coordinateY, 1 + index]}
+            position={[Number(x), Number(y), 1 + index]}
             zIndexRange={[100, 0]}
             key={index}
           >
@@ -205,7 +194,7 @@ const MapLegend: FC = () => {
               <Camps
                 onClick={() => {
                   // console.log('e', e);
-                  campCenter(coordinateX, coordinateY, camp.id);
+                  campCenter(Number(x), Number(x), camp.id);
                 }}
               >
                 <div>

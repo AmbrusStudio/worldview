@@ -1,36 +1,6 @@
 import { planeHeight, planeWidth } from '../constants';
 
 /**
- * Get map zoom by container
- * @param width
- * @param height
- * @returns
- */
-export const getMapZoomByContainer = (width: number, height: number): 1 | 2 => {
-  let zoom: 1 | 2 = 1;
-
-  if (width > planeWidth[1] || height > planeHeight[1]) {
-    zoom = 2;
-  }
-
-  return zoom;
-};
-
-/**
- * Get map zoom by container
- * @param width
- * @param height
- * @returns
- */
-export const getMapSizeByContainer = (width: number, height: number) => {
-  const zoom = getMapZoomByContainer(width, height);
-
-  const w = planeWidth[zoom];
-  const h = planeHeight[zoom];
-  return [w, h];
-};
-
-/**
  * Container exceeds map limits
  * @param width
  * @param height
@@ -38,10 +8,20 @@ export const getMapSizeByContainer = (width: number, height: number) => {
  */
 export const isContainerExceedsMapLimits = (
   width: number,
-  height: number
+  height: number,
+  zoom: number
 ): boolean => {
-  if (width > planeWidth[2] || height > planeHeight[2]) {
+  if (width > planeWidth * zoom || height > planeHeight * zoom) {
     return true;
   }
   return false;
+};
+
+export const getMapZoom = (width: number, height: number): number => {
+  const maxDiameter = planeHeight;
+  const widthZoom = width / maxDiameter;
+  const heightZoom = height / maxDiameter;
+
+  // console.log(widthZoom, heightZoom);
+  return Math.min(widthZoom, heightZoom);
 };

@@ -4,11 +4,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { MapControls as MapControlsImpl } from 'three-stdlib';
 
+import { planeHeight, planeWidth } from '../../constants';
 import { useStoreMapControls } from '../../store';
-import {
-  getMapSizeByContainer,
-  isContainerExceedsMapLimits,
-} from '../../utils';
+import { isContainerExceedsMapLimits } from '../../utils';
 
 const MapControlsHelper = () => {
   const { camera, size } = useThree();
@@ -27,16 +25,16 @@ const MapControlsHelper = () => {
   const limitPanningDistance = useCallback(
     (e?: THREE.Event) => {
       // map limit
-      if (isContainerExceedsMapLimits(size.width, size.height)) {
+      if (isContainerExceedsMapLimits(size.width, size.height, camera.zoom)) {
         return;
       }
 
       // 704.5 102
       // 1056.75 320
-      const [w, h] = getMapSizeByContainer(size.width, size.height);
 
-      const pan = (w * camera.zoom - size.width) / 2 / camera.zoom;
-      const vertical = (h * camera.zoom - size.height) / 2 / camera.zoom;
+      const pan = (planeWidth * camera.zoom - size.width) / 2 / camera.zoom;
+      const vertical =
+        (planeHeight * camera.zoom - size.height) / 2 / camera.zoom;
 
       // console.log('pan vertical', pan, vertical);
 
@@ -59,20 +57,18 @@ const MapControlsHelper = () => {
   );
 
   return (
-    <>
-      <MapControls
-        ref={mapControlsRef}
-        enableRotate={false}
-        minZoom={1}
-        maxZoom={2}
-        zoomSpeed={0.3}
-        onChange={(e) => {
-          // console.log(e?.target);
-          limitPanningDistance(e);
-        }}
-        makeDefault
-      />
-    </>
+    <MapControls
+      ref={mapControlsRef}
+      enableRotate={false}
+      minZoom={1}
+      maxZoom={2}
+      zoomSpeed={0.3}
+      onChange={(e) => {
+        // console.log(e?.target);
+        limitPanningDistance(e);
+      }}
+      makeDefault
+    />
   );
 };
 
