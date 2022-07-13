@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://api.ambrus.studio/api',
+  baseURL: process.env.REACT_APP_WORLDVIEW_API,
 });
 
 // Add a response interceptor

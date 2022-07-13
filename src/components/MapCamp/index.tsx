@@ -8,6 +8,7 @@ import useSWR from 'swr';
 import { getWorldViewInfoApi } from '../../services/worldview';
 import { useStoreMapControls } from '../../store';
 import { getMapZoomByContainer } from '../../utils';
+import { openWorldviewOrganization, openWorldviewRanger } from '../../utils';
 import ArrowRight from '../Icons/ArrowRight';
 
 const Wrapper = styled.div`
@@ -144,7 +145,7 @@ const MapLegend: FC = () => {
   /**
    * toggle camp
    */
-  const campCenter = (x: number, y: number): void => {
+  const campCenter = (x: number, y: number, id: number): void => {
     if (!mapControlsRef) {
       return;
     }
@@ -168,7 +169,10 @@ const MapLegend: FC = () => {
         camera.zoom = object.zoom;
         camera.updateProjectionMatrix();
       })
-      .start(); // Start the tween immediately.
+      .start()
+      .onComplete(() => {
+        openWorldviewOrganization(id);
+      });
   };
 
   useEffect(() => {
@@ -201,7 +205,7 @@ const MapLegend: FC = () => {
               <Camps
                 onClick={() => {
                   // console.log('e', e);
-                  campCenter(coordinateX, coordinateY);
+                  campCenter(coordinateX, coordinateY, camp.id);
                 }}
               >
                 <div>
@@ -216,7 +220,7 @@ const MapLegend: FC = () => {
                   <RoleWrapper
                     key={indexJ}
                     onClick={() => {
-                      alert(role.name);
+                      openWorldviewRanger(role.id);
                     }}
                   >
                     <div>
