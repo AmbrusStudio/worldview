@@ -1,4 +1,4 @@
-import { planeHeight, planeWidth } from '../constants';
+import { planeHeight, planeWidth } from '../constants'
 
 /**
  * Container exceeds map limits
@@ -6,22 +6,18 @@ import { planeHeight, planeWidth } from '../constants';
  * @param height
  * @returns
  */
-export const isContainerExceedsMapLimits = (
-  width: number,
-  height: number,
-  zoom: number
-): boolean => {
+export const isContainerExceedsMapLimits = (width: number, height: number, zoom: number): boolean => {
   if (width > planeWidth * zoom || height > planeHeight * zoom) {
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
 
 export const getMapZoom = (width: number, height: number): number => {
-  const maxDiameter = planeHeight;
-  const widthZoom = width / maxDiameter;
-  const heightZoom = height / maxDiameter;
+  const maxDiameter = planeHeight
+  const widthZoom = width / maxDiameter
+  const heightZoom = height / maxDiameter
 
   // console.log(widthZoom, heightZoom);
-  return Math.min(widthZoom, heightZoom);
-};
+  return Math.min(widthZoom, heightZoom)
+}

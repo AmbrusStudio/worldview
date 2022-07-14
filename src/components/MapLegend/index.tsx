@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
-import { Stack } from '@mui/material';
-import Box from '@mui/material/Box';
-import React, { FC } from 'react';
+import styled from '@emotion/styled'
+import { Stack } from '@mui/material'
+import Box from '@mui/material/Box'
+import React, { FC } from 'react'
 
 const LegendTitle = styled.p`
   font-family: 'Montserrat', sans-serif;
@@ -12,14 +12,14 @@ const LegendTitle = styled.p`
   color: rgba(0, 0, 0, 0.4);
   padding: 0;
   margin: 0 0 12px 0;
-`;
+`
 
 const LegendItemDot = styled.div<{ color: string }>`
   width: 16px;
   height: 16px;
   background: ${(p) => p.color || '#fff'};
   border-radius: 50%;
-`;
+`
 
 const LegendItemText = styled.span`
   font-family: 'Montserrat', sans-serif;
@@ -29,7 +29,7 @@ const LegendItemText = styled.span`
   line-height: 20px;
   font-feature-settings: 'tnum' on, 'lnum' on;
   color: rgba(0, 0, 0, 0.4);
-`;
+`
 
 const LegendData = [
   {
@@ -40,7 +40,7 @@ const LegendData = [
     color: '#BED2DD',
     value: '2022',
   },
-];
+]
 
 const MapLegend: FC = () => {
   return (
@@ -63,7 +63,7 @@ const MapLegend: FC = () => {
         ))}
       </Stack>
     </Box>
-  );
-};
+  )
+}
 
-export default MapLegend;
+export default MapLegend

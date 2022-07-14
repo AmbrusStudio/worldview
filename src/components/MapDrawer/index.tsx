@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { Stack } from '@mui/material';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import { FC } from 'react';
+import styled from '@emotion/styled'
+import { Stack } from '@mui/material'
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import { FC } from 'react'
 
-import { useStoreMapDrawer } from '../../store';
-import ArrowRight from '../Icons/ArrowRight';
+import { useStoreMapDrawer } from '../../store'
+import ArrowRight from '../Icons/ArrowRight'
 
 const VolSerialNumber = styled.p`
   /* font-family: 'SF Pro'; */
@@ -17,7 +17,7 @@ const VolSerialNumber = styled.p`
   color: #ff4125;
   padding: 0;
   margin: 12px 0 0 0;
-`;
+`
 
 const VolTitle = styled.span`
   /* font-family: 'SF Pro'; */
@@ -27,16 +27,16 @@ const VolTitle = styled.span`
   line-height: 19px;
   text-transform: capitalize;
   color: #ffffff;
-`;
+`
 
 const VolLink = styled.a`
   text-decoration: none;
-`;
+`
 
 const MapDrawer: FC = () => {
-  const visible = useStoreMapDrawer((state) => state.visible);
-  const campVol = useStoreMapDrawer((state) => state.campVol);
-  const setVisible = useStoreMapDrawer((state) => state.setVisible);
+  const visible = useStoreMapDrawer((state) => state.visible)
+  const campVol = useStoreMapDrawer((state) => state.campVol)
+  const setVisible = useStoreMapDrawer((state) => state.setVisible)
 
   return (
     <Drawer
@@ -46,17 +46,9 @@ const MapDrawer: FC = () => {
       hideBackdrop={true}
       className="MuiDrawerMap"
     >
-      <Stack
-        spacing={3}
-        sx={{ width: 480, padding: '36px', overflowY: 'auto' }}
-      >
+      <Stack spacing={3} sx={{ width: 480, padding: '36px', overflowY: 'auto' }}>
         {campVol.map((vol, index) => (
-          <VolLink
-            target="_blank"
-            href={`/vol/${vol.id + index}`}
-            rel="noreferrer"
-            key={index}
-          >
+          <VolLink target="_blank" href={`/vol/${vol.id + index}`} rel="noreferrer" key={index}>
             <Box
               component="div"
               key={index}
@@ -66,11 +58,7 @@ const MapDrawer: FC = () => {
                 height: 220,
               }}
             >
-              <img
-                src={vol.cover}
-                alt="cover"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
+              <img src={vol.cover} alt="cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </Box>
             <VolSerialNumber>Vol.{index + 1}</VolSerialNumber>
             <VolTitle>{vol.title}</VolTitle>
@@ -99,7 +87,7 @@ const MapDrawer: FC = () => {
         </Box>
       )}
     </Drawer>
-  );
-};
+  )
+}
 
-export default MapDrawer;
+export default MapDrawer

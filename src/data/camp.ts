@@ -1,4 +1,4 @@
-import { Camp } from '../types';
+import { Camp } from '../types'
 
 export const campData: Camp[] = [
   {
@@ -149,4 +149,4 @@ export const campData: Camp[] = [
       },
     ],
   },
-];
+]

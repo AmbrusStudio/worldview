@@ -1,4 +1,4 @@
-import { GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { GizmoHelper, GizmoViewport } from '@react-three/drei'
 
 const MapHelper = () => {
   return (
@@ -9,7 +9,7 @@ const MapHelper = () => {
         <GizmoViewport />
       </GizmoHelper>
     </group>
-  );
-};
+  )
+}
 
-export default MapHelper;
+export default MapHelper

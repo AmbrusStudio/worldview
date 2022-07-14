@@ -1,1 +1,1 @@
-export * from './camp';
+export * from './camp'

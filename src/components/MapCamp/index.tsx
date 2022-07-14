@@ -1,18 +1,18 @@
-import styled from '@emotion/styled';
-import { Html } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
-import * as TWEEN from '@tweenjs/tween.js';
-import { FC, useEffect } from 'react';
-import useSWR from 'swr';
+import styled from '@emotion/styled'
+import { Html } from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
+import * as TWEEN from '@tweenjs/tween.js'
+import { FC, useEffect } from 'react'
+import useSWR from 'swr'
 
-import { getWorldViewInfoApi } from '../../services/worldview';
-import { useStoreMapControls } from '../../store';
-import { openWorldviewOrganization, openWorldviewRanger } from '../../utils';
-import ArrowRight from '../Icons/ArrowRight';
+import { getWorldViewInfoApi } from '../../services/worldview'
+import { useStoreMapControls } from '../../store'
+import { openWorldviewOrganization, openWorldviewRanger } from '../../utils'
+import ArrowRight from '../Icons/ArrowRight'
 
 const Wrapper = styled.div`
   user-select: none;
-`;
+`
 const Camps = styled.div`
   /* width: 60px; */
   height: 60px;
@@ -60,14 +60,14 @@ const Camps = styled.div`
     opacity: 0;
     transition: all 0.3s ease-out;
   }
-`;
+`
 
 const Roles = styled.div`
   display: grid;
   margin-top: 12px;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 12px;
-`;
+`
 
 const RoleWrapper = styled.div`
   width: 80px;
@@ -122,23 +122,20 @@ const RoleWrapper = styled.div`
     opacity: 0;
     transition: all 0.3s ease-out;
   }
-`;
+`
 
 const MapLegend: FC = () => {
-  const { data, error } = useSWR<API.Response<API.Camp[]>>(
-    'api',
-    getWorldViewInfoApi
-  );
+  const { data, error } = useSWR<API.Response<API.Camp[]>>('api', getWorldViewInfoApi)
 
-  const { camera } = useThree();
-  const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef);
+  const { camera } = useThree()
+  const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef)
 
   /**
    * toggle camp
    */
   const campCenter = (x: number, y: number, id: number): void => {
     if (!mapControlsRef) {
-      return;
+      return
     }
 
     new TWEEN.Tween({
@@ -151,50 +148,45 @@ const MapLegend: FC = () => {
       .onUpdate((object) => {
         // console.log('object', object);
 
-        mapControlsRef.target.setX(object.x);
-        mapControlsRef.target.setY(object.y);
+        mapControlsRef.target.setX(object.x)
+        mapControlsRef.target.setY(object.y)
 
-        camera.position.setX(object.x);
-        camera.position.setY(object.y);
+        camera.position.setX(object.x)
+        camera.position.setY(object.y)
 
-        camera.zoom = object.zoom;
-        camera.updateProjectionMatrix();
+        camera.zoom = object.zoom
+        camera.updateProjectionMatrix()
       })
       .start()
       .onComplete(() => {
-        openWorldviewOrganization(id);
-      });
-  };
+        openWorldviewOrganization(id)
+      })
+  }
 
   useEffect(() => {
     // Setup the animation loop.
     function animate(time: number) {
-      requestAnimationFrame(animate);
-      TWEEN.update(time);
+      requestAnimationFrame(animate)
+      TWEEN.update(time)
     }
-    requestAnimationFrame(animate);
-  }, []);
+    requestAnimationFrame(animate)
+  }, [])
 
-  if (error) return <group></group>;
-  if (!data || !data?.data) return <group></group>;
+  if (error) return <group></group>
+  if (!data || !data?.data) return <group></group>
 
   return (
     <group position={[0, 0, 10]}>
       {data?.data.map((camp, index) => {
-        const [x, y] = camp.coordinate.split(',');
+        const [x, y] = camp.coordinate.split(',')
 
         return (
-          <Html
-            wrapperClass="role"
-            position={[Number(x), Number(y), 1 + index]}
-            zIndexRange={[100, 0]}
-            key={index}
-          >
+          <Html wrapperClass="role" position={[Number(x), Number(y), 1 + index]} zIndexRange={[100, 0]} key={index}>
             <Wrapper>
               <Camps
                 onClick={() => {
                   // console.log('e', e);
-                  campCenter(Number(x), Number(x), camp.id);
+                  campCenter(Number(x), Number(x), camp.id)
                 }}
               >
                 <div>
@@ -209,26 +201,23 @@ const MapLegend: FC = () => {
                   <RoleWrapper
                     key={indexJ}
                     onClick={() => {
-                      openWorldviewRanger(role.id);
+                      openWorldviewRanger(role.id)
                     }}
                   >
                     <div>
                       <img src={role.icon} alt={role.title} />
                     </div>
                     <span>{role.name}</span>
-                    <ArrowRight
-                      className="role-icon"
-                      sx={{ fontSize: '1em' }}
-                    />
+                    <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
                   </RoleWrapper>
                 ))}
               </Roles>
             </Wrapper>
           </Html>
-        );
+        )
       })}
     </group>
-  );
-};
+  )
+}
 
-export default MapLegend;
+export default MapLegend

@@ -1,9 +1,9 @@
-import { Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Stats } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 
-import MapBackground from '../../components/MapBackground';
-import MapControlsHelper from '../../components/MapControlsHelper';
-import MapHelper from '../../components/MapHelper';
+import MapBackground from '../../components/MapBackground'
+import MapControlsHelper from '../../components/MapControlsHelper'
+import MapHelper from '../../components/MapHelper'
 
 function MapRender() {
   return (
@@ -27,7 +27,7 @@ function MapRender() {
       </div>
       {process.env.NODE_ENV === 'development' && <Stats className="fps" />}
     </>
-  );
+  )
 }
 
-export default MapRender;
+export default MapRender

@@ -1,13 +1,13 @@
-import { FC, Suspense } from 'react';
+import { FC, Suspense } from 'react'
 
-import MapCamp from '../../components/MapCamp';
-import MapGame from '../../components/MapGame';
-import { useMapZoom } from '../../hooks';
+import MapCamp from '../../components/MapCamp'
+import MapGame from '../../components/MapGame'
+import { useMapZoom } from '../../hooks'
 
 // type MapBackgroundProps = {};
 
 const MapBackground: FC = () => {
-  useMapZoom();
+  useMapZoom()
 
   return (
     <Suspense fallback={null}>
@@ -16,7 +16,7 @@ const MapBackground: FC = () => {
         <MapCamp />
       </group>
     </Suspense>
-  );
-};
+  )
+}
 
-export default MapBackground;
+export default MapBackground

@@ -1,5 +1,5 @@
-export * from './camp';
+export * from './camp'
 
 export type NumberArray = {
-  [index: number]: number;
-};
+  [index: number]: number
+}
