@@ -9,6 +9,7 @@ declare namespace API {
     id: number;
     avatar: string;
     thumbnail: string;
+    icon: string;
     name: string;
     title: string;
   };

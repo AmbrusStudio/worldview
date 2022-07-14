@@ -213,7 +213,7 @@ const MapLegend: FC = () => {
                     }}
                   >
                     <div>
-                      <img src={role.avatar} alt={role.title} />
+                      <img src={role.icon} alt={role.title} />
                     </div>
                     <span>{role.name}</span>
                     <ArrowRight
