@@ -41,7 +41,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "yarn lint:eslint",
-    "lint:eslint": "eslint '**/*.{ts,tsx}' --fix"
+    "lint:eslint": "eslint '**/*.{ts,tsx}' --fix",
+    "postinstall": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -65,6 +66,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@types/three": "^0.141.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
@@ -75,6 +78,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "2.7.1"
   }
 }
