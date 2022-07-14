@@ -1,6 +1,6 @@
-import MapDrawer from './components/MapDrawer';
-import MapLegend from './components/MapLegend';
-import MapRender from './components/MapRender';
+import MapDrawer from './components/MapDrawer'
+import MapLegend from './components/MapLegend'
+import MapRender from './components/MapRender'
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <MapLegend />
       <MapDrawer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
