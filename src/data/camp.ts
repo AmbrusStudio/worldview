@@ -1,5 +1,6 @@
 import { Camp } from '../types'
 
+// camp test data
 export const campData: Camp[] = [
   {
     x: -826,
