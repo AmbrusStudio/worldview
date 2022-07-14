@@ -1,12 +1,10 @@
 import styled from '@emotion/styled'
 import { Html } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
 import * as TWEEN from '@tweenjs/tween.js'
 import { FC, useEffect } from 'react'
 import useSWR from 'swr'
 
 import { getWorldViewInfoApi } from '../../services/worldview'
-import { useStoreMapControls } from '../../store'
 import { openWorldviewOrganization, openWorldviewRanger } from '../../utils'
 import ArrowRight from '../Icons/ArrowRight'
 
@@ -127,42 +125,6 @@ const RoleWrapper = styled.div`
 const MapLegend: FC = () => {
   const { data, error } = useSWR<API.Response<API.Camp[]>>('api', getWorldViewInfoApi)
 
-  const { camera } = useThree()
-  const mapControlsRef = useStoreMapControls((state) => state.mapControlsRef)
-
-  /**
-   * toggle camp
-   */
-  const campCenter = (x: number, y: number, id: number): void => {
-    if (!mapControlsRef) {
-      return
-    }
-
-    new TWEEN.Tween({
-      x: mapControlsRef.target.x,
-      y: mapControlsRef.target.y,
-      zoom: camera.zoom,
-    })
-      .to({ x: x, y: y, zoom: mapControlsRef.maxZoom }, 800)
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .onUpdate((object) => {
-        // console.log('object', object);
-
-        mapControlsRef.target.setX(object.x)
-        mapControlsRef.target.setY(object.y)
-
-        camera.position.setX(object.x)
-        camera.position.setY(object.y)
-
-        camera.zoom = object.zoom
-        camera.updateProjectionMatrix()
-      })
-      .start()
-      .onComplete(() => {
-        openWorldviewOrganization(id)
-      })
-  }
-
   useEffect(() => {
     // Setup the animation loop.
     function animate(time: number) {
@@ -186,7 +148,7 @@ const MapLegend: FC = () => {
               <Camps
                 onClick={() => {
                   // console.log('e', e);
-                  campCenter(Number(x), Number(y), camp.id)
+                  openWorldviewOrganization(camp.id)
                 }}
               >
                 <div>
