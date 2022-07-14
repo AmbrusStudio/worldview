@@ -186,7 +186,7 @@ const MapLegend: FC = () => {
               <Camps
                 onClick={() => {
                   // console.log('e', e);
-                  campCenter(Number(x), Number(x), camp.id)
+                  campCenter(Number(x), Number(y), camp.id)
                 }}
               >
                 <div>
