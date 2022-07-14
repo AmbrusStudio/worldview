@@ -73,7 +73,7 @@ const RoleWrapper = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 40px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   cursor: pointer;
