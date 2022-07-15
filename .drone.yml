@@ -10,7 +10,7 @@ steps:
 - name: build
   when:
     branch:
-    - master
+    - main
   commands:
   - cd /mnt/worldview
   - git pull
