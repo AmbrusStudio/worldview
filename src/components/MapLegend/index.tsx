@@ -1,7 +1,17 @@
 import styled from '@emotion/styled'
 import { Stack } from '@mui/material'
-import Box from '@mui/material/Box'
-import React, { FC } from 'react'
+import { FC } from 'react'
+
+const LegendWrapper = styled.div`
+  position: fixed;
+  left: 36px;
+  bottom: 36px;
+  z-index: 1000;
+  @media screen and (max-width: 960px) {
+    left: 20px;
+    bottom: 120px;
+  }
+`
 
 const LegendTitle = styled.p`
   font-family: 'Montserrat', sans-serif;
@@ -12,6 +22,10 @@ const LegendTitle = styled.p`
   color: rgba(0, 0, 0, 0.4);
   padding: 0;
   margin: 0 0 12px 0;
+  @media screen and (max-width: 960px) {
+    font-size: 14px;
+    line-height: 18px;
+  }
 `
 
 const LegendItemDot = styled.div<{ color: string }>`
@@ -19,6 +33,10 @@ const LegendItemDot = styled.div<{ color: string }>`
   height: 16px;
   background: ${(p) => p.color || '#fff'};
   border-radius: 50%;
+  @media screen and (max-width: 960px) {
+    width: 12px;
+    height: 12px;
+  }
 `
 
 const LegendItemText = styled.span`
@@ -29,6 +47,10 @@ const LegendItemText = styled.span`
   line-height: 20px;
   font-feature-settings: 'tnum' on, 'lnum' on;
   color: rgba(0, 0, 0, 0.4);
+  @media screen and (max-width: 960px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
 `
 
 const LegendData = [
@@ -44,15 +66,7 @@ const LegendData = [
 
 const MapLegend: FC = () => {
   return (
-    <Box
-      component="div"
-      sx={{
-        position: 'fixed',
-        left: 36,
-        bottom: 36,
-        zIndex: 1000,
-      }}
-    >
+    <LegendWrapper>
       <LegendTitle>Map of E4C:Verse</LegendTitle>
       <Stack spacing={1}>
         {LegendData.map((legend, index) => (
@@ -62,7 +76,7 @@ const MapLegend: FC = () => {
           </Stack>
         ))}
       </Stack>
-    </Box>
+    </LegendWrapper>
   )
 }
 
