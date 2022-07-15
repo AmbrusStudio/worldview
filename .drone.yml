@@ -13,5 +13,6 @@ steps:
     - master
   commands:
   - cd /mnt/worldview
+  - git pull
   - yarn
   - yarn build
