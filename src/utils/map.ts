@@ -13,11 +13,12 @@ export const isContainerExceedsMapLimits = (width: number, height: number, zoom:
   return false
 }
 
+/**
+ * get Map Zoom
+ * @param width
+ * @param height
+ * @returns
+ */
 export const getMapZoom = (width: number, height: number): number => {
-  const maxDiameter = planeHeight
-  const widthZoom = width / maxDiameter
-  const heightZoom = height / maxDiameter
-
-  // console.log(widthZoom, heightZoom);
-  return Math.min(widthZoom, heightZoom)
+  return height / planeHeight
 }
