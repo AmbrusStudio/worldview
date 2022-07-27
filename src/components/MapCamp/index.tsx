@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Stack } from '@mui/material'
 import { Html } from '@react-three/drei'
 import * as TWEEN from '@tweenjs/tween.js'
 import { FC, useEffect } from 'react'
@@ -10,6 +11,8 @@ import ArrowRight from '../Icons/ArrowRight'
 
 const Wrapper = styled.div`
   user-select: none;
+  width: 0;
+  height: 0;
 `
 const Camps = styled.div`
   /* width: 60px; */
@@ -58,13 +61,6 @@ const Camps = styled.div`
     opacity: 0;
     transition: all 0.3s ease-out;
   }
-`
-
-const Roles = styled.div`
-  display: grid;
-  margin-top: 12px;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 12px;
 `
 
 const RoleWrapper = styled.div`
@@ -158,7 +154,13 @@ const MapLegend: FC = () => {
                 <ArrowRight className="camp-icon" sx={{ fontSize: '1em' }} />
               </Camps>
 
-              <Roles>
+              <Stack
+                spacing={1.5}
+                direction="row"
+                sx={{
+                  marginTop: '12px',
+                }}
+              >
                 {camp.ranger_list.map((role, indexJ) => (
                   <RoleWrapper
                     key={indexJ}
@@ -173,7 +175,7 @@ const MapLegend: FC = () => {
                     <ArrowRight className="role-icon" sx={{ fontSize: '1em' }} />
                   </RoleWrapper>
                 ))}
-              </Roles>
+              </Stack>
             </Wrapper>
           </Html>
         )
